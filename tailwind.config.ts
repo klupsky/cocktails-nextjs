@@ -8,22 +8,40 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      gridTemplateColumns: {
-        '13': 'repeat(13, minmax(0, 1fr))',
+      fontFamily: {
+        apfel: ['Apfel', 'sans-serif'],
+        messapia: ['Messapia', 'sans-serif'],
       },
       colors: {
-        blue: {
-          400: '#2589FE',
-          500: '#0070F3',
-          600: '#2F6FEB',
-        },
+        purple: '#BBBAF9',
+        red: '#E75C3C',
+        blue: '#BEEBF6',
+        pink: '#FFC6DC',
+        yellow: '#E0EA79',
       },
-    },
-    keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
-        },
+      width: {
+        'fit-content': 'fit-content',
+      },
+      height: {
+        'fit-content': 'fit-content',
+      },
+      maxWidth: {
+        'fit-content': 'fit-content',
+      },
+      maxHeight: {
+        'fit-content': 'fit-content',
+      },
+      borderWidth: {
+        default: '1px',
+        0: '0',
+        2: '2px',
+        4: '4px',
+      },
+      borderRadius: {
+        default: '0',
+        0: '0',
+        30: '30px',
+        50: '50px',
       },
     },
   },
