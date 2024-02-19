@@ -18,18 +18,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <form
-        action={async () => {
-          'use server';
-          await signOut();
-        }}
-      >
-        <button>
-          <div>Sign Out</div>
-        </button>
-      </form>
+      <body>
+        <form
+          action={async () => {
+            'use server';
+            await signOut();
+          }}
+        >
+          <button>
+            <div>Sign Out</div>
+          </button>
+        </form>
 
-      <body>{children}</body>
+        {children}
+      </body>
     </html>
   );
 }

@@ -20,7 +20,7 @@ const RegisterFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid Email Address.',
   }),
-  password: z.string().refine((data) => data.length > 0, {
+  password: z.string().refine((data) => data.length > 6, {
     message: 'Please enter a Password.',
   }),
 });
