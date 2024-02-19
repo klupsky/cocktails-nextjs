@@ -5,6 +5,11 @@ const bcrypt = require('bcrypt');
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Drop the "cocktails" table if it exists
+    await client.sql`DROP TABLE IF EXISTS users`;
+    console.log(`Dropped "users" table`);
+
     // Create the "users" table if it doesn't exist
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS users (
@@ -88,7 +93,7 @@ async function seedCocktails(client) {
 
 async function main() {
   const client = await db.connect();
-  // await seedUsers(client);
+  await seedUsers(client);
   await seedCocktails(client);
 
   await client.end();

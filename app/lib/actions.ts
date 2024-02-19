@@ -14,14 +14,14 @@ const bcrypt = require('bcrypt');
 //  form validation
 const RegisterFormSchema = z.object({
   id: z.string(),
-  name: z.string({
-    invalid_type_error: 'Please add a Name.',
+  name: z.string().refine((data) => data.length > 0, {
+    message: 'Please add a Name.',
   }),
   email: z.string().email({
     message: 'Please enter a valid Email Address.',
   }),
-  password: z.string({
-    invalid_type_error: 'Please enter a Password.',
+  password: z.string().refine((data) => data.length > 0, {
+    message: 'Please enter a Password.',
   }),
 });
 
@@ -72,8 +72,8 @@ export async function createUser(prevState: State, formData: FormData) {
   }
 
   // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/user');
-  redirect('/user');
+  revalidatePath('/login');
+  redirect('/login');
 }
 
 // AUTHENTICATION

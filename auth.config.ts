@@ -1,7 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
 
-// the user will be redirected to our custom login page, rather than the NextAuth.js default page.
-
 export const authConfig = {
   pages: {
     signIn: '/login',
