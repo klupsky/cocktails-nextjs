@@ -1,5 +1,6 @@
 import '@/app/ui/global.css';
 import '@/app/ui/fonts.css';
+import { signOut } from '@/auth';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -17,6 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <form
+        action={async () => {
+          'use server';
+          await signOut();
+        }}
+      >
+        <button>
+          <div>Sign Out</div>
+        </button>
+      </form>
+
       <body>{children}</body>
     </html>
   );
