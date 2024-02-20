@@ -18,6 +18,7 @@ async function getUser(email: string): Promise<User | undefined> {
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  session: { strategy: 'jwt' },
   // here you could list e-mail, github, google, etc. as providers
   providers: [
     Credentials({
