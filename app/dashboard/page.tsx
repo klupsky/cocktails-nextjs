@@ -1,9 +1,12 @@
 import { auth } from '@/auth';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page() {
   let session = await auth();
   let user = session?.user;
 
-  console.log(user, 'i am the user');
-  return <main>{user.name} </main>;
+  return (
+    <main>
+      {user?.name} {user?.email}
+    </main>
+  );
 }

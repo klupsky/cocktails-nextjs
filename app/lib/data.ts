@@ -1,12 +1,12 @@
 import { sql } from '@vercel/postgres';
-import { PreviewCocktail, User } from './definitions';
+import { TPreviewCocktail, TUser } from './definitions';
 
 // GET USER BY EMAIL
 
 export async function getUser(email: string) {
   try {
     const user = await sql`SELECT * FROM users WHERE email=${email}`;
-    return user.rows[0] as User;
+    return user.rows[0] as TUser;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -18,7 +18,7 @@ export async function getUser(email: string) {
 export async function getUserById(id: string) {
   try {
     const user = await sql`SELECT * FROM users WHERE id=${id}`;
-    return user.rows[0] as User;
+    return user.rows[0] as TUser;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -28,7 +28,7 @@ export async function getUserById(id: string) {
 // GET COCKTAILS
 export async function getPreviewFromCollectionOfCocktails() {
   try {
-    const previewCollection = await sql<PreviewCocktail[]>`
+    const previewCollection = await sql<TPreviewCocktail[]>`
       SELECT
         cocktails.id AS id,
         cocktails.name AS name,
@@ -46,7 +46,6 @@ export async function getPreviewFromCollectionOfCocktails() {
         name ASC
       LIMIT 6;
     `;
-    console.log(previewCollection, 'this is the previewCollection');
     return previewCollection;
   } catch (error) {
     console.error('Failed to fetch preview cocktails:', error);

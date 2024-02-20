@@ -1,3 +1,11 @@
+import Wave from 'react-wavify';
+import { TCollection } from './lib/definitions';
+import CollectionPreview from './ui/CollectionPreciew';
+
 export default function Page() {
-  return <main className="font-apfel text-8xl">hellooooo</main>;
+  return (
+    <main>
+      <CollectionPreview />
+    </main>
+  );
 }
