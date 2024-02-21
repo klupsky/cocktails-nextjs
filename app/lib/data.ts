@@ -42,7 +42,7 @@ export async function getPreviewFromCollectionOfCocktails() {
         name ASC
       LIMIT 6;
     `;
-    return previewCollection.rows;
+    return previewCollection.rows[0];
   } catch (error) {
     console.error('Failed to fetch preview cocktails:', error);
     throw new Error('Failed to fetch preview cocktails.');
@@ -60,7 +60,7 @@ export async function getCategories() {
       categories
     ORDER BY name ASC;
     `;
-    return categories;
+    return categories.rows;
   } catch (error) {
     console.error('Failed to fetch categories:', error);
     throw new Error('Failed to fetch categories.');
@@ -78,7 +78,7 @@ export async function getFlavours() {
       flavours
     ORDER BY name ASC;
     `;
-    return flavours;
+    return flavours.rows;
   } catch (error) {
     console.error('Failed to fetch flavours:', error);
     throw new Error('Failed to fetch flavours.');
@@ -95,7 +95,7 @@ export async function getLevels() {
     FROM
       levels
     `;
-    return levels;
+    return levels.rows;
   } catch (error) {
     console.error('Failed to fetch levels::', error);
     throw new Error('Failed to fetch levels.');
@@ -113,7 +113,7 @@ export async function getSpirits() {
       spirits
     ORDER BY name ASC;
     `;
-    return spirits;
+    return spirits.rows;
   } catch (error) {
     console.error('Failed to fetch spirits:', error);
     throw new Error('Failed to fetch spirits.');

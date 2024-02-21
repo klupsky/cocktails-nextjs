@@ -1,6 +1,5 @@
 import Wave from 'react-wavify';
-import { TCollection } from './lib/definitions';
-import CollectionPreview from './ui/CollectionPreciew';
+import CollectionPreview from './components/CollectionPreview/serverComponent';
 
 export default function Page() {
   return (

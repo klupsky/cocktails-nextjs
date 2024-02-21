@@ -2,11 +2,11 @@
   font-family: 'Apfel';
   src:
     local('Apfel'),
-    url('../../public/fonts/ApfelGrotezk-Regular.woff') format('woff');
+    url('../public/fonts/ApfelGrotezk-Regular.woff') format('woff');
 }
 @font-face {
   font-family: 'Messapia';
   src:
     local('Messapia'),
-    url('../../public/fonts/Messapia-Bold.woff') format('woff');
+    url('../public/fonts/Messapia-Bold.woff') format('woff');
 }

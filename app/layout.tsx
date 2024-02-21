@@ -1,5 +1,5 @@
-import '@/app/ui/global.css';
-import '@/app/ui/fonts.css';
+import '@/app/global.css';
+import '@/app/fonts.css';
 import { signOut } from '@/auth';
 import { Metadata } from 'next';
 

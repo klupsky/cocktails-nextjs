@@ -1,11 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPreviewFromCollectionOfCocktails } from '../lib/data';
+import { getPreviewFromCollectionOfCocktails } from '../../lib/data';
 
 export default async function CollectionPreview() {
   const previewCocktails = await getPreviewFromCollectionOfCocktails();
-
-  console.log(previewCocktails, 'previewCocktails');
 
   return (
     <>

@@ -27,7 +27,7 @@ const RegisterFormSchema = z.object({
 
 const CreateUser = RegisterFormSchema.omit({ id: true, date: true });
 
-export type State = {
+export type TState = {
   errors?: {
     name?: string[];
     email?: string[];
@@ -36,7 +36,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function createUser(prevState: State, formData: FormData) {
+export async function createUser(prevState: TState, formData: FormData) {
   // Validate form using Zod
   const validatedFields = CreateUser.safeParse({
     name: formData.get('name'),
@@ -95,4 +95,73 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+// RECOMMENDATION
+
+//  form validation
+const RecommendationFormSchema = z.object({
+  flavour: z
+    .string()
+    .nullable()
+    .refine(
+      (data) => data !== null && data !== undefined && data.trim() !== '',
+      {
+        message: 'Please pick a flavour.',
+      },
+    ),
+  spirit: z
+    .string()
+    .nullable()
+    .refine(
+      (data) => data !== null && data !== undefined && data.trim() !== '',
+      {
+        message: 'Please pick a spirit.',
+      },
+    ),
+  level: z
+    .string()
+    .nullable()
+    .refine(
+      (data) => data !== null && data !== undefined && data.trim() !== '',
+      {
+        message: 'Please pick a level.',
+      },
+    ),
+});
+
+export type TRecommendation = {
+  errors?: {
+    flavour?: string[];
+    spirit?: string[];
+    level?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createRecommendation(
+  prevState: TRecommendation,
+  formData: FormData,
+) {
+  // Validate form using Zod
+  const validatedFields = RecommendationFormSchema.safeParse({
+    flavour: formData.get('flavour'),
+    spirit: formData.get('spirit'),
+    level: formData.get('level'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to recommend you a cocktail.',
+    };
+  }
+
+  // Prepare recommendation link
+  const { flavour, spirit, level } = validatedFields.data;
+
+  const recommendationLink = `/recommendedCocktail/recommendation?flavour=${flavour}&spirit=${spirit}&level=${level}`;
+  revalidatePath(recommendationLink);
+  redirect(recommendationLink);
 }
