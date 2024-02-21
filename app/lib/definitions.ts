@@ -15,6 +15,26 @@ export type TPreviewCocktail = {
   categoryid: number;
 };
 
+export type TFlavour = {
+  id: number;
+  name: string;
+};
+
+export type TSpirit = {
+  id: number;
+  name: string;
+};
+
+export type TCategory = {
+  id: number;
+  name: string;
+};
+
+export type TLevel = {
+  id: number;
+  level: number;
+};
+
 export type TCollection = {
   collectionPreview: {
     id: number;

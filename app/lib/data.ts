@@ -1,5 +1,12 @@
 import { sql } from '@vercel/postgres';
-import { TPreviewCocktail, TUser } from './definitions';
+import {
+  TCategory,
+  TFlavour,
+  TLevel,
+  TPreviewCocktail,
+  TSpirit,
+  TUser,
+} from './definitions';
 
 // GET USER BY EMAIL
 
@@ -13,19 +20,8 @@ export async function getUser(email: string) {
   }
 }
 
-// GET USER BY ID
+// GET COCKTAIL PREVIEW
 
-export async function getUserById(id: string) {
-  try {
-    const user = await sql`SELECT * FROM users WHERE id=${id}`;
-    return user.rows[0] as TUser;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
-
-// GET COCKTAILS
 export async function getPreviewFromCollectionOfCocktails() {
   try {
     const previewCollection = await sql<TPreviewCocktail[]>`
@@ -50,5 +46,76 @@ export async function getPreviewFromCollectionOfCocktails() {
   } catch (error) {
     console.error('Failed to fetch preview cocktails:', error);
     throw new Error('Failed to fetch preview cocktails.');
+  }
+}
+
+// GET CATEGORIES
+
+export async function getCategories() {
+  try {
+    const categories = await sql<TCategory[]>`
+    SELECT
+      *
+    FROM
+      categories
+    ORDER BY name ASC;
+    `;
+    return categories;
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+    throw new Error('Failed to fetch categories.');
+  }
+}
+
+// GET FLAVOURS
+
+export async function getFlavours() {
+  try {
+    const flavours = await sql<TFlavour[]>`
+    SELECT
+      *
+    FROM
+      flavours
+    ORDER BY name ASC;
+    `;
+    return flavours;
+  } catch (error) {
+    console.error('Failed to fetch flavours:', error);
+    throw new Error('Failed to fetch flavours.');
+  }
+}
+
+// GET LEVELS
+
+export async function getLevels() {
+  try {
+    const levels = await sql<TLevel[]>`
+    SELECT
+      *
+    FROM
+      levels
+    `;
+    return levels;
+  } catch (error) {
+    console.error('Failed to fetch levels::', error);
+    throw new Error('Failed to fetch levels.');
+  }
+}
+
+// GET SPIRITS
+
+export async function getSpirits() {
+  try {
+    const spirits = await sql<TSpirit[]>`
+    SELECT
+      *
+    FROM
+      spirits
+    ORDER BY name ASC;
+    `;
+    return spirits;
+  } catch (error) {
+    console.error('Failed to fetch spirits:', error);
+    throw new Error('Failed to fetch spirits.');
   }
 }
