@@ -5,6 +5,23 @@ export type TUser = {
   password: string;
 };
 
+export type TCocktail = {
+  name: string;
+  cocktailId: number;
+  level: number;
+  levelId: number;
+  flavourId: number;
+  flavour: string;
+  flavourcolour: string;
+  spirit: string;
+  spiritId: number;
+  description: string;
+  glass: string;
+  garnish: string;
+  category: string;
+  categoryId: number;
+};
+
 export type TPreviewCocktail = {
   id: number;
   name: string;

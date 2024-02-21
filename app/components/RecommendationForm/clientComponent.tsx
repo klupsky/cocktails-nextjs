@@ -3,12 +3,21 @@ import { createRecommendation } from '@/app/lib/actions';
 import { TFlavour, TLevel, TSpirit } from '@/app/lib/definitions';
 import { useFormState } from 'react-dom';
 
-export default function RecommendationForm({ flavours, spirits, levels }) {
+type TRecommendationForm = {
+  flavours: TFlavour[];
+  spirits: TSpirit[];
+  levels: TLevel[];
+};
+
+export default function RecommendationForm({
+  flavours,
+  spirits,
+  levels,
+}: TRecommendationForm) {
   const initialState = { message: null, errors: {} };
 
   const [state, dispatch] = useFormState(createRecommendation, initialState);
 
-  console.log(state);
   return (
     <ul>
       <form action={dispatch}>

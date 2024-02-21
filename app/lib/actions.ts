@@ -161,7 +161,7 @@ export async function createRecommendation(
   // Prepare recommendation link
   const { flavour, spirit, level } = validatedFields.data;
 
-  const recommendationLink = `/recommendedCocktail/recommendation?flavour=${flavour}&spirit=${spirit}&level=${level}`;
+  const recommendationLink = `/recommendation/flavour=${flavour}&spirit=${spirit}&level=${level}`;
   revalidatePath(recommendationLink);
   redirect(recommendationLink);
 }

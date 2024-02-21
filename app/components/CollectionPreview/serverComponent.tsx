@@ -1,3 +1,4 @@
+import { TPreviewCocktail } from '@/app/lib/definitions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPreviewFromCollectionOfCocktails } from '../../lib/data';
@@ -9,7 +10,7 @@ export default async function CollectionPreview() {
     <>
       {previewCocktails && (
         <div>
-          {previewCocktails.map((preview, i) => (
+          {previewCocktails.map((preview: TPreviewCocktail, i: number) => (
             <div className="carouselInsideStyle" key={`cocktailid-${i}`}>
               <div>
                 <Link href={`/collection/${preview.id}`}>
