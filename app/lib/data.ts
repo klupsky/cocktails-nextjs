@@ -24,7 +24,7 @@ export async function getUser(email: string) {
 
 export async function getPreviewFromCollectionOfCocktails() {
   try {
-    const previewCollection = await sql<TPreviewCocktail[]>`
+    const previewCollection = await sql<TPreviewCocktail>`
       SELECT
         cocktails.id AS id,
         cocktails.name AS name,
@@ -42,7 +42,7 @@ export async function getPreviewFromCollectionOfCocktails() {
         name ASC
       LIMIT 6;
     `;
-    return previewCollection;
+    return previewCollection.rows;
   } catch (error) {
     console.error('Failed to fetch preview cocktails:', error);
     throw new Error('Failed to fetch preview cocktails.');
