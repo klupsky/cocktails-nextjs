@@ -1,4 +1,4 @@
-import Recommendation from '../../../components/Recommendation/clientComponent';
+import Cocktail from '../../../components/Cocktail/clientComponent';
 import { getRecommendationBasedOnUrlAndDatabase } from '../../../lib/data';
 
 interface TParams {
@@ -20,10 +20,10 @@ export default async function Page({ params }: TParams) {
     spirit,
     level,
   );
-  console.log(recommedation);
+
   return (
     <main>
-      <Recommendation />
+      <Cocktail cocktail={recommedation} />
     </main>
   );
 }

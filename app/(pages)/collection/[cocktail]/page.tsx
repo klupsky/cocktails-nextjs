@@ -1,3 +1,4 @@
+import Cocktail from '../../../components/Cocktail/clientComponent';
 import { getSingleCocktailFromCollection } from '../../../lib/data';
 
 interface TParams {
@@ -11,6 +12,9 @@ export default async function Page({ params }: TParams) {
 
   const collectionCocktail = await getSingleCocktailFromCollection(cocktail);
 
-  console.log(collectionCocktail);
-  return <main>{collectionCocktail.name}</main>;
+  return (
+    <main>
+      <Cocktail cocktail={collectionCocktail} />
+    </main>
+  );
 }
