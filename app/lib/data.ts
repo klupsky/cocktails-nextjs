@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   TCategory,
   TCocktail,
+  TCollection,
   TFlavour,
   TLevel,
   TPreviewCocktail,
@@ -25,7 +26,7 @@ export async function getUser(email: string) {
 
 export async function getFullCollectionOfCocktails() {
   try {
-    const collection = await sql`
+    const collection = await sql<TCollection>`
 
     SELECT
       cocktails.id AS id,
@@ -101,7 +102,7 @@ export async function getPreviewFromCollectionOfCocktails() {
 
 export async function getCategories() {
   try {
-    const categories = await sql<TCategory[]>`
+    const categories = await sql<TCategory>`
     SELECT
       *
     FROM
@@ -119,7 +120,7 @@ export async function getCategories() {
 
 export async function getFlavours() {
   try {
-    const flavours = await sql<TFlavour[]>`
+    const flavours = await sql<TFlavour>`
     SELECT
       *
     FROM
@@ -137,7 +138,7 @@ export async function getFlavours() {
 
 export async function getLevels() {
   try {
-    const levels = await sql<TLevel[]>`
+    const levels = await sql<TLevel>`
     SELECT
       *
     FROM
@@ -154,7 +155,7 @@ export async function getLevels() {
 
 export async function getSpirits() {
   try {
-    const spirits = await sql<TSpirit[]>`
+    const spirits = await sql<TSpirit>`
     SELECT
       *
     FROM
@@ -176,7 +177,7 @@ export async function getRecommendationBasedOnUrlAndDatabase(
   level: number | string,
 ) {
   try {
-    const joinedRecommendation = await sql<[TCocktail | undefined]>`
+    const joinedRecommendation = await sql<TCocktail>`
     SELECT
       cocktails.id AS cocktail_id,
       cocktails.name AS name,
@@ -216,10 +217,10 @@ export async function getRecommendationBasedOnUrlAndDatabase(
   `;
 
     if (joinedRecommendation.rows.length > 0) {
-      return joinedRecommendation.rows;
+      return joinedRecommendation.rows[0];
     }
 
-    const joinedRecommendationBackup = await sql<[TCocktail | undefined]>`
+    const joinedRecommendationBackup = await sql<TCocktail>`
       SELECT
         cocktails.id AS cocktail_id,
         cocktails.name AS name,
@@ -253,7 +254,7 @@ export async function getRecommendationBasedOnUrlAndDatabase(
       LIMIT 1
     `;
 
-    return joinedRecommendationBackup.rows;
+    return joinedRecommendationBackup.rows[0];
   } catch (error) {
     console.error('Failed to fetch a recommendation:', error);
     throw new Error('Failed to fetch recommendation.');
@@ -264,7 +265,7 @@ export async function getRecommendationBasedOnUrlAndDatabase(
 
 export async function getSingleCocktailFromCollection(cocktail: string) {
   try {
-    const collectionCocktail = await sql`
+    const collectionCocktail = await sql<TCocktail>`
     SELECT
       cocktails.id,
       cocktails.name,

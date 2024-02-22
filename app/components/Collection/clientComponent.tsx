@@ -1,12 +1,72 @@
 'use client';
 
-import { TCategory, TCocktail } from '../../lib/definitions';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { TCategory, TCollection } from '../../lib/definitions';
 
-type TCollection = {
-  collection: TCocktail[];
+export default function Collection({
+  collection,
+  categories,
+}: {
+  collection: TCollection[];
   categories: TCategory[];
-};
-export default function Collection({ collection, categories }: TCollection) {
-  console.log(collection, categories);
-  return <section>cocktails</section>;
+}) {
+  const [activeCategory, setActiveCategory] = useState<string>('');
+  const [cocktailList, setCocktailList] = useState(collection);
+
+  const filterCocktails = (category) => {
+    setCocktailList(
+      collection.filter((cocktail) => cocktail.category === category),
+    );
+  };
+
+  return (
+    <section>
+      cocktails
+      <div>
+        {categories.map((category) => {
+          return (
+            <button
+              key={category.name}
+              onClick={() => {
+                filterCocktails(category.name);
+              }}
+            >
+              {category.name}
+            </button>
+          );
+        })}
+        <button
+          onClick={() => {
+            setCocktailList(collection);
+          }}
+        >
+          FULL COLLECTION
+        </button>
+      </div>
+      <div>
+        {cocktailList.map((cocktailName) => {
+          return (
+            <div key={`cocktailName-${cocktailName.id}`}>
+              <div>{cocktailName.name}</div>
+              <div>
+                <span> {cocktailName.category}</span>
+              </div>
+              <div>
+                <Link href={`/collection/${cocktailName.slug}`}>
+                  <Image
+                    src="/../images/components/→.svg"
+                    width={30}
+                    height={30}
+                    alt="arrow"
+                  />
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
 }

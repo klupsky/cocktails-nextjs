@@ -20,6 +20,7 @@ export type TCocktail = {
   garnish: string;
   category: string;
   categoryId: number;
+  slug: string;
 };
 
 export type TPreviewCocktail = {
@@ -30,6 +31,7 @@ export type TPreviewCocktail = {
   flavourid: number;
   spiritid: number;
   categoryid: number;
+  slug: string;
 };
 
 export type TFlavour = {
@@ -53,20 +55,19 @@ export type TLevel = {
 };
 
 export type TCollection = {
-  collectionPreview: {
-    id: number;
-    name: string;
-    level: number;
-    levelid: number;
-    flavourid: number;
-    flavour: string;
-    spirit: string;
-    spiritid: number;
-    description: string;
-    glass: string;
-    method: string;
-    garnish: string;
-    category: string;
-    categoryid: number;
-  }[];
+  id: number;
+  name: string;
+  level: number;
+  levelid: number;
+  flavourid: number;
+  flavour: string;
+  spirit: string;
+  spiritid: number;
+  description: string;
+  glass: string;
+  method: string;
+  garnish: string;
+  category: string;
+  categoryid: number;
+  slug: string;
 };
