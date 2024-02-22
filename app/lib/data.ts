@@ -21,6 +21,51 @@ export async function getUser(email: string) {
   }
 }
 
+// GET ALL COCKTAILS
+
+export async function getFullCollectionOfCocktails() {
+  try {
+    const collection = await sql`
+
+    SELECT
+      cocktails.id AS id,
+      cocktails.name AS name,
+      levels.level AS level,
+      levels.id AS levelId,
+      flavours.id AS flavourId,
+      flavours.name AS flavour,
+      spirits.name AS spirit,
+      spirits.id AS spiritId,
+      cocktails.description AS description,
+      cocktails.glass AS glass,
+      cocktails.method AS method,
+      cocktails.garnish AS garnish,
+      categories.name AS category,
+      categories.id AS categoryId
+
+    FROM
+      cocktails,
+      flavours,
+      levels,
+      spirits,
+      categories
+
+     WHERE
+      cocktails.spirit_id = spirits.id AND
+      cocktails.flavour_id = flavours.id AND
+      cocktails.level_id = levels.id AND
+      cocktails.category_id = categories.id
+
+    ORDER BY name ASC;
+
+  `;
+    return collection.rows;
+  } catch (error) {
+    console.error('Failed to fetch collection:', error);
+    throw new Error('Failed to fetch collection.');
+  }
+}
+
 // GET COCKTAIL PREVIEW
 
 export async function getPreviewFromCollectionOfCocktails() {
@@ -208,5 +253,44 @@ export async function getRecommendationBasedOnUrlAndDatabase(
   } catch (error) {
     console.error('Failed to fetch a recommendation:', error);
     throw new Error('Failed to fetch recommendation.');
+  }
+}
+
+// GET SINGLE COCKTAIL FROM COLLECTION
+
+export async function getSingleCocktailFromCollection(cocktailId: string) {
+  try {
+    const collectionCocktail = await sql`
+    SELECT
+      cocktails.id,
+      cocktails.name,
+      cocktails.level_id,
+      cocktails.description,
+      cocktails.glass,
+      cocktails.method,
+      cocktails.garnish,
+      flavours.colour AS flavourcolour,
+      flavours.name AS flavourname,
+      spirits.name AS spirit,
+      categories.name AS category
+
+    FROM
+      cocktails,
+      flavours,
+      levels,
+      spirits,
+      categories
+
+    WHERE
+      cocktails.id = ${cocktailId} AND
+      cocktails.flavour_id = flavours.id AND
+      cocktails.level_id = levels.id AND
+      cocktails.spirit_id = spirits.id AND
+      cocktails.category_id = categories.id
+      `;
+    return collectionCocktail.rows[0];
+  } catch (error) {
+    console.error('Failed to fetch cocktail:', error);
+    throw new Error('Failed to fetch cocktail.');
   }
 }
