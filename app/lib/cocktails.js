@@ -11,6 +11,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight',
     category_id: 1,
+    slug: 'corpse-reviver-2',
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const cocktails = [
     method: 'stirred | shaken',
     garnish: 'olive | lemon zest',
     category_id: 1,
+    slug: 'dry-martini',
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'kumquat slice',
     category_id: 1,
+    slug: 'french-75',
   },
   {
     id: 4,
@@ -50,6 +53,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'lime zest',
     category_id: 1,
+    slug: 'gimlet',
   },
 
   {
@@ -64,6 +68,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight',
     category_id: 1,
+    slug: 'gin-fizz',
   },
   {
     id: 6,
@@ -77,6 +82,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight | amarena cherry',
     category_id: 1,
+    slug: 'last-word',
   },
   {
     id: 7,
@@ -90,6 +96,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'straight | lemon zest',
     category_id: 1,
+    slug: 'martinez',
   },
   {
     id: 8,
@@ -103,6 +110,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'lemon zest',
     category_id: 1,
+    slug: 'negroni',
   },
   {
     id: 9,
@@ -116,6 +124,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'cucumber | black pepper',
     category_id: 2,
+    slug: 'queen-mum',
   },
   {
     id: 10,
@@ -129,6 +138,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'lemon zest',
     category_id: 1,
+    slug: 'white-negroni',
   },
   {
     id: 11,
@@ -142,6 +152,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'straight | lemon zest',
     category_id: 1,
+    slug: 'boulevardier',
   },
   {
     id: 12,
@@ -155,6 +166,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'straight | lemon zest',
     category_id: 1,
+    slug: 'greenpoint',
   },
   {
     id: 13,
@@ -168,6 +180,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'lemon zest',
     category_id: 2,
+    slug: 'horses-neck',
   },
   {
     id: 14,
@@ -181,6 +194,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'amarena cherry',
     category_id: 1,
+    slug: 'manhattan-perfect',
   },
   {
     id: 15,
@@ -194,6 +208,7 @@ const cocktails = [
     method: 'built-in | stirred',
     garnish: 'amarena cherry | orange zest',
     category_id: 1,
+    slug: 'old-fashioned',
   },
   {
     id: 16,
@@ -207,6 +222,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'amarena cherry | orange slice',
     category_id: 1,
+    slug: 'whiskey-sour',
   },
   {
     id: 17,
@@ -220,6 +236,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'sugar-coated ginger slice',
     category_id: 1,
+    slug: 'penicillin',
   },
   {
     id: 18,
@@ -233,6 +250,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'mint | lime slice',
     category_id: 2,
+    slug: 'dark-and-stormy',
   },
   {
     id: 19,
@@ -246,6 +264,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight | mint',
     category_id: 1,
+    slug: 'old-cuban',
   },
   {
     id: 20,
@@ -259,6 +278,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'lime and orange slices',
     category_id: 1,
+    slug: 'classic-margarita',
   },
   {
     id: 21,
@@ -272,6 +292,7 @@ const cocktails = [
     method: 'stirred',
     garnish: 'straight | orange zest',
     category_id: 3,
+    slug: 'el-presidente',
   },
   {
     id: 22,
@@ -285,6 +306,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'grapefruit slice | salt rim',
     category_id: 2,
+    slug: 'la-paloma',
   },
   {
     id: 23,
@@ -298,6 +320,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'mint | cucumber | lemon and orange slices',
     category_id: 2,
+    slug: 'pimms-cup',
   },
   {
     id: 24,
@@ -311,6 +334,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight',
     category_id: 4,
+    slug: 'pisco-sour',
   },
   {
     id: 25,
@@ -324,6 +348,7 @@ const cocktails = [
     method: 'shaken',
     garnish: 'straight | mint | coffeebeans',
     category_id: 1,
+    slug: 'espresso-martini',
   },
   {
     id: 26,
@@ -337,6 +362,7 @@ const cocktails = [
     method: 'built-in',
     garnish: 'mint | cucumber',
     category_id: 1,
+    slug: 'moscow-mule',
   },
 ];
 

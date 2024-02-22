@@ -72,7 +72,8 @@ async function seedCocktails(client) {
 			  glass varchar(50) NOT NULL,
 			  method varchar(50) NOT NULL,
 			  garnish varchar(50) NOT NULL,
-			  category_id integer NOT NULL
+			  category_id integer NOT NULL,
+        slug varchar(30) NOT NULL
       );
     `;
 
@@ -82,8 +83,8 @@ async function seedCocktails(client) {
     const insertedCocktails = await Promise.all(
       cocktails.map(
         (cocktail) => client.sql`
-          INSERT INTO cocktails (id, name, level_id, flavour_id, spirit_id, description, glass, method, garnish, category_id )
-          VALUES (${cocktail.id}, ${cocktail.name}, ${cocktail.level_id}, ${cocktail.flavour_id}, ${cocktail.spirit_id}, ${cocktail.description}, ${cocktail.glass}, ${cocktail.method}, ${cocktail.garnish}, ${cocktail.category_id})
+          INSERT INTO cocktails (id, name, level_id, flavour_id, spirit_id, description, glass, method, garnish, category_id, slug )
+          VALUES (${cocktail.id}, ${cocktail.name}, ${cocktail.level_id}, ${cocktail.flavour_id}, ${cocktail.spirit_id}, ${cocktail.description}, ${cocktail.glass}, ${cocktail.method}, ${cocktail.garnish}, ${cocktail.category_id}, ${cocktail.slug})
           ON CONFLICT (id) DO NOTHING;
         `,
       ),

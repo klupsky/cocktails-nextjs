@@ -3,12 +3,12 @@ import { getRecommendationBasedOnUrlAndDatabase } from '../../../lib/data';
 
 interface TParams {
   params: {
-    index: string[];
+    cocktail: string[];
   };
 }
 
 export default async function Page({ params }: TParams) {
-  const encodedParams = params.index[0];
+  const encodedParams = params.cocktail[0];
   const decodedParams = encodedParams.replace(/%3D/g, '=').replace(/%26/g, '&');
   const paramsArray = decodedParams.split('&');
   const [flavour, spirit, level] = paramsArray.map(

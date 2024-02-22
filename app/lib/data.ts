@@ -41,7 +41,8 @@ export async function getFullCollectionOfCocktails() {
       cocktails.method AS method,
       cocktails.garnish AS garnish,
       categories.name AS category,
-      categories.id AS categoryId
+      categories.id AS categoryId,
+      cocktails.slug AS slug
 
     FROM
       cocktails,
@@ -74,6 +75,7 @@ export async function getPreviewFromCollectionOfCocktails() {
       SELECT
         cocktails.id AS id,
         cocktails.name AS name,
+        cocktails.slug AS slug,
         levels.id AS levelId,
         flavours.id AS flavourId,
         spirits.id AS spiritId,
@@ -178,6 +180,7 @@ export async function getRecommendationBasedOnUrlAndDatabase(
     SELECT
       cocktails.id AS cocktail_id,
       cocktails.name AS name,
+      cocktails.slug AS slug,
       levels.level AS level,
       levels.id AS levelId,
       flavours.id AS flavourId,
@@ -220,6 +223,7 @@ export async function getRecommendationBasedOnUrlAndDatabase(
       SELECT
         cocktails.id AS cocktail_id,
         cocktails.name AS name,
+        cocktails.slug AS slug,
         levels.level AS level,
         levels.id AS levelId,
         flavours.id AS flavourId,
@@ -258,12 +262,13 @@ export async function getRecommendationBasedOnUrlAndDatabase(
 
 // GET SINGLE COCKTAIL FROM COLLECTION
 
-export async function getSingleCocktailFromCollection(cocktailId: string) {
+export async function getSingleCocktailFromCollection(cocktail: string) {
   try {
     const collectionCocktail = await sql`
     SELECT
       cocktails.id,
       cocktails.name,
+      cocktails.slug,
       cocktails.level_id,
       cocktails.description,
       cocktails.glass,
@@ -282,7 +287,7 @@ export async function getSingleCocktailFromCollection(cocktailId: string) {
       categories
 
     WHERE
-      cocktails.id = ${cocktailId} AND
+      cocktails.slug = ${cocktail} AND
       cocktails.flavour_id = flavours.id AND
       cocktails.level_id = levels.id AND
       cocktails.spirit_id = spirits.id AND
