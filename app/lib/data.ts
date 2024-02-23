@@ -300,3 +300,116 @@ export async function getSingleCocktailFromCollection(cocktail: string) {
     throw new Error('Failed to fetch cocktail.');
   }
 }
+
+// FAVOURITES
+
+export async function addUserFavourite(userId: number, cocktailId: number) {
+  const addFavouriteCocktail = await sql<TCocktail>`
+    INSERT INTO
+    favourites
+      (user_id, cocktail_id)
+
+    VALUES
+      (${userId}, ${cocktailId})
+å
+    RETURNING
+      *
+  `;
+  return addFavouriteCocktail.rows[0];
+}
+
+export async function deleteUserFavourite(userId: number, id: number) {
+  const deletedFavouriteCocktail = await sql<TCocktail>`
+    DELETE FROM
+      favourites
+
+    WHERE
+      favourites.id = ${id} AND
+      favourites.user_id = ${userId}
+
+    RETURNING
+    *
+  `;
+  return deletedFavouriteCocktail.rows;
+}
+
+export async function checkFavourites(id: number, cocktailId: number) {
+  const favouritesCheck = await sql<TCocktail>`
+    SELECT
+      favourites.id
+
+    FROM
+      favourites
+
+    WHERE
+      favourites.user_Id = ${id} AND
+      favourites.cocktail_Id = ${cocktailId}
+  `;
+  return favouritesCheck.rows;
+}
+
+export async function getNumberOfFavourites(cocktailId: number) {
+  const collectionCocktail = await sql<TCocktail>`
+    SELECT
+      *
+
+    FROM
+      cocktails,
+      favourites
+
+    WHERE
+      cocktails.id = ${cocktailId} AND
+      favourites.cocktail_id = ${cocktailId}
+
+
+      `;
+  return collectionCocktail.rows;
+}
+
+export async function getAllFavourites() {
+  const favouriteCocktailList = await sql<TCocktail>`
+    SELECT
+      favourites.id,
+      favourites.user_id,
+      favourites.cocktail_id,
+      users.username,
+      cocktails.name
+
+    FROM
+      favourites,
+      cocktails,
+      users
+
+    WHERE
+      users.id = favourites.user_id AND
+      favourites.cocktail_id = cocktails.id
+
+  `;
+  return favouriteCocktailList.rows;
+}
+
+export async function getUserFavourites(userId: any) {
+  const favouriteCocktails = await sql<TCocktail>`
+    SELECT
+      favourites.id,
+      favourites.user_id,
+      favourites.cocktail_id,
+      users.username,
+      cocktails.name,
+      flavours.colour AS flavourcolour
+
+    FROM
+      favourites,
+      cocktails,
+      users,
+      flavours
+
+    WHERE
+      favourites.user_id = ${userId} AND
+      users.id = favourites.user_id AND
+      favourites.cocktail_id = cocktails.id AND
+      cocktails.flavour_id = flavours.id
+
+  `;
+  return favouriteCocktails.rows;
+}

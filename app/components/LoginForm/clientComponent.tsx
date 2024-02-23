@@ -1,6 +1,7 @@
 'use client';
 
 import { authenticate } from '@/app/lib/actions';
+import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 
 export default function LoginForm() {
@@ -46,6 +47,9 @@ export default function LoginForm() {
             </>
           )}
         </div>
+      </div>
+      <div>
+        Don't have an account? <Link href="/register">Register now</Link>
       </div>
     </form>
   );

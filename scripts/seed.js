@@ -271,14 +271,43 @@ async function seedCategories(client) {
   }
 }
 
+async function seedFavourites(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Drop the "favourites" table if it exists
+    await client.sql`DROP TABLE IF EXISTS favourites`;
+    console.log(`Dropped "users" table`);
+
+    // Create the "favourites" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS favourites (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_id integer NOT NULL,
+        cocktail_id integer NOT NULL
+      );
+    `;
+
+    console.log(`Created "favourites" table`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error seeding favourites:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
-  // await seedUsers(client);
+  await seedUsers(client);
   await seedCocktails(client);
   await seedFlavours(client);
   await seedLevels(client);
   await seedSpirits(client);
   await seedCategories(client);
+  await seedFavourites(client);
 
   await client.end();
 }

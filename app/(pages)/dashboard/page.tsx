@@ -1,8 +1,8 @@
 import { auth } from '@/auth';
 
 export default async function Page() {
-  let session = await auth();
-  let user = session?.user;
+  const session = await auth();
+  const user = session?.user;
 
   return (
     <main>

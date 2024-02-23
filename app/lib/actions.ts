@@ -52,12 +52,10 @@ export async function createUser(prevState: TState, formData: FormData) {
     };
   }
 
-  // Prepare data for insertion into the database
   const { name, email, password } = validatedFields.data;
   const hashedPassword = await bcrypt.hash(password, 10);
   const id = uuidv4();
 
-  // Insert data into the database
   try {
     await sql`
       INSERT INTO users (id, name, email, password)
@@ -65,13 +63,11 @@ export async function createUser(prevState: TState, formData: FormData) {
       ON CONFLICT (id) DO NOTHING;
     `;
   } catch (error) {
-    // If a database error occurs, return a more specific error.
     return {
       message: 'Database Error: Failed to Create Invoice.',
     };
   }
 
-  // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath('/login');
   redirect('/login');
 }
@@ -95,6 +91,8 @@ export async function authenticate(
     }
     throw error;
   }
+
+  redirect('/dashboard');
 }
 
 // RECOMMENDATION
