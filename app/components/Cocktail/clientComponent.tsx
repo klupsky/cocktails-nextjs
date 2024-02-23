@@ -1,6 +1,6 @@
 'use client';
-import Image from 'next/image';
 import { TCocktail, TUser } from '../../lib/definitions';
+import AddToFavouritesForm from '../addToFavouritesForm/component';
 
 type TCocktails = {
   cocktail: TCocktail;
@@ -8,16 +8,15 @@ type TCocktails = {
 };
 
 export default function Cocktail({ cocktail, user }: TCocktails) {
+  console.log(user, cocktail);
   return (
     <section>
       {cocktail.name}
 
       {user && (
-        <Image
-          src="/../../images/components/heart1.svg"
-          width={24}
-          height={24}
-          alt="add to favourites"
+        <AddToFavouritesForm
+          userEmail={user.email}
+          cocktailId={cocktail.cocktail_id}
         />
       )}
     </section>

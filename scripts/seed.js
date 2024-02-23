@@ -283,15 +283,29 @@ async function seedFavourites(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS favourites (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        user_id integer NOT NULL,
+        user_email TEXT NOT NULL UNIQUE,
         cocktail_id integer NOT NULL
       );
     `;
 
     console.log(`Created "favourites" table`);
 
+    // Insert data into the "favourites" table
+    const insertedFavourites = await Promise.all(
+      favourites.map(
+        (favourite) => client.sql`
+        INSERT INTO favourites (user_email, cocktail_id)
+        VALUES (${favourite.user_email}, ${favourite.cocktail_id})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedFavourites.length} favourites`);
+
     return {
       createTable,
+      favourites: insertedFavourites,
     };
   } catch (error) {
     console.error('Error seeding favourites:', error);

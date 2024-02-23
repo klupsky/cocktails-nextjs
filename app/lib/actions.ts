@@ -163,3 +163,45 @@ export async function createRecommendation(
   revalidatePath(recommendationLink);
   redirect(recommendationLink);
 }
+
+// ADD TO FAVOURITES
+
+export async function addToFavourites(formData: FormData) {
+  const userEmail = formData.get('userEmail');
+  const cocktailId = formData.get('cocktailId');
+
+  // Check if the values are present and convert them to strings
+  const userEmailValue = userEmail ? userEmail.toString() : null;
+  const cocktailIdValue = cocktailId ? cocktailId.toString() : null;
+
+  try {
+    await sql`
+      INSERT INTO favourites (user_email, cocktail_id)
+      VALUES (${userEmailValue}, ${cocktailIdValue})
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to add to favourites.',
+    };
+  }
+}
+
+// REMOVE FROM FAVOURITES
+
+export async function removeFromFavourites(formData: FormData) {
+  const userEmail = String(formData.get('userEmail'));
+  const cocktailId = String(formData.get('cocktailId'));
+
+  try {
+    await sql`
+      DELETE FROM favourites
+      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to remove from favourites.',
+    };
+  }
+}
