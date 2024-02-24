@@ -366,7 +366,7 @@ async function main() {
   // await seedSpirits(client);
   // await seedCategories(client);
 
-  await seedReviews(client);
+  // await seedReviews(client);
   // await seedUsers(client);
   // await seedFavourites(client);
 

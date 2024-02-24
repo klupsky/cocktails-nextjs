@@ -20,6 +20,8 @@ export default function ReviewForm({
 
   const [state, dispatch] = useFormState(createReview, initialState);
 
+  console.log(state);
+
   return (
     <form action={dispatch}>
       <input type="hidden" name="userEmail" value={userEmail} />
@@ -36,7 +38,7 @@ export default function ReviewForm({
               name="rating"
               value={index + 1}
             />
-            <Star />
+            <Star filled={index + 1 <= state.rating} />
           </label>
         ))}
       </div>
