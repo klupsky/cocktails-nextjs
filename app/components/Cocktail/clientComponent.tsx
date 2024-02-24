@@ -12,7 +12,7 @@ export default function Cocktail({ cocktail, user }: TCocktails) {
   return (
     <section>
       {cocktail.name}
-
+      {cocktail.cocktail_id}
       {user && (
         <AddToFavouritesForm
           userEmail={user.email}

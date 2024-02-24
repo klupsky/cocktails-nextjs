@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useFormState } from 'react-dom';
 import { addToFavourites } from '../../lib/actions';
 
 export default function AddToFavouritesForm({

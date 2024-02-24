@@ -283,7 +283,7 @@ async function seedFavourites(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS favourites (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        user_email TEXT NOT NULL UNIQUE,
+        user_email TEXT NOT NULL,
         cocktail_id integer NOT NULL
       );
     `;
@@ -315,13 +315,14 @@ async function seedFavourites(client) {
 
 async function main() {
   const client = await db.connect();
+  // await seedCocktails(client);
+  // await seedFlavours(client);
+  // await seedLevels(client);
+  // await seedSpirits(client);
+  // await seedCategories(client);
+
   await seedUsers(client);
-  await seedCocktails(client);
-  await seedFlavours(client);
-  await seedLevels(client);
-  await seedSpirits(client);
-  await seedCategories(client);
-  await seedFavourites(client);
+  // await seedFavourites(client);
 
   await client.end();
 }

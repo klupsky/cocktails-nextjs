@@ -2,7 +2,7 @@
 import { signIn } from '@/auth';
 import { sql } from '@vercel/postgres';
 import { AuthError } from 'next-auth';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_noStore as noStore } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
@@ -169,20 +169,37 @@ export async function createRecommendation(
 export async function addToFavourites(formData: FormData) {
   const userEmail = formData.get('userEmail');
   const cocktailId = formData.get('cocktailId');
-
   // Check if the values are present and convert them to strings
   const userEmailValue = userEmail ? userEmail.toString() : null;
   const cocktailIdValue = cocktailId ? cocktailId.toString() : null;
-
+  noStore();
   try {
-    await sql`
-      INSERT INTO favourites (user_email, cocktail_id)
-      VALUES (${userEmailValue}, ${cocktailIdValue})
+    // Check if the combination already exists
+    const existingFavourite = await sql`
+      SELECT id
+      FROM favourites
+      WHERE user_email = ${userEmailValue} AND cocktail_id = ${cocktailIdValue}
     `;
+
+    if (existingFavourite.rows.length > 0) {
+      // If the combination exists, delete the existing row
+      await sql`
+        DELETE FROM favourites
+        WHERE user_email = ${userEmailValue} AND cocktail_id = ${cocktailIdValue}
+      `;
+      console.log('removed', userEmailValue, cocktailIdValue);
+    } else {
+      // If the combination doesn't exist, insert a new row
+      await sql`
+        INSERT INTO favourites (user_email, cocktail_id)
+        VALUES (${userEmailValue}, ${cocktailIdValue})
+      `;
+      console.log('added', userEmailValue, cocktailIdValue);
+    }
   } catch (error) {
-    // If a database error occurs, return a more specific error.
+    console.error('Database error:', error);
     return {
-      message: 'Database Error: Failed to add to favourites.',
+      message: 'Database Error: Failed to add or remove from favourites.',
     };
   }
 }
@@ -202,6 +219,39 @@ export async function removeFromFavourites(formData: FormData) {
     // If a database error occurs, return a more specific error.
     return {
       message: 'Database Error: Failed to remove from favourites.',
+    };
+  }
+}
+
+// CHECK IF FAVOURITE
+
+export async function checkFavourites(formData: FormData) {
+  const userEmail = formData.get('userEmail');
+  const cocktailId = formData.get('cocktailId');
+
+  // Check if the values are present and convert them to strings
+  const userEmailValue = userEmail ? userEmail.toString() : null;
+  const cocktailIdValue = cocktailId ? cocktailId.toString() : null;
+
+  try {
+    await sql`
+    SELECT
+      favourites.id
+
+    FROM
+      favourites
+
+    WHERE
+      favourites.user_email = ${userEmailValue} AND
+      favourites.cocktail_id = ${cocktailIdValue}
+
+  `;
+    return favouritesCheck.rows.length > 0;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to fetch favourites.',
+      error: error.message, // You might want to include the actual error message for debugging.
     };
   }
 }
