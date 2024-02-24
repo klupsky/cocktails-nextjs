@@ -14,7 +14,7 @@ export default function AddToFavouritesForm({
   isFavourite: boolean;
 }) {
   const [isFavourite, setIsFavourite] = useState(initialIsFavourite);
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
