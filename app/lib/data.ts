@@ -302,10 +302,33 @@ export async function getSingleCocktailFromCollection(cocktail: string) {
   }
 }
 
+// CHECK IF COCKTAIL IS A USERS FAVOURITE
+
 export async function checkIsUserFavourite(
-  userEmail: string,
+  userEmail: string | null | undefined,
   cocktailId: number,
 ) {
+  noStore();
+  try {
+    const existingFavourite = await sql`
+      SELECT id
+      FROM favourites
+      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
+    `;
+    console.log(existingFavourite, 'existingFavourite');
+
+    return existingFavourite.rows.length > 0;
+  } catch (error) {
+    console.error('Failed to fetch favourite:', error);
+    throw new Error('Failed to fetch favourite.');
+  }
+}
+
+// GET ALL REVIEWS
+
+// CHECK USER RATING
+
+export async function checkUserRating(userEmail: string, cocktailId: number) {
   noStore();
   try {
     // Check if the combination already exists

@@ -9,7 +9,7 @@ export default function AddToFavouritesForm({
   cocktailId,
   isFavourite: initialIsFavourite,
 }: {
-  userEmail: string;
+  userEmail?: string;
   cocktailId: number;
   isFavourite: boolean;
 }) {

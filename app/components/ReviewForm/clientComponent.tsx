@@ -10,7 +10,7 @@ export default function ReviewForm({
   cocktailId,
   userName,
 }: {
-  userEmail: string;
+  userEmail?: string;
   cocktailId: number;
   userName: string;
 }) {
@@ -19,8 +19,6 @@ export default function ReviewForm({
   const initialState = { message: null, errors: {}, rating: 0 };
 
   const [state, dispatch] = useFormState(createReview, initialState);
-
-  console.log(state);
 
   return (
     <form action={dispatch}>

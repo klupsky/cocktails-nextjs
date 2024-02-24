@@ -5,6 +5,11 @@ export type TUser = {
   password: string;
 };
 
+export type TUserFromParams = {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+};
+
 export type TCocktail = {
   name: string;
   cocktail_id: number;

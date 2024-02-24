@@ -13,7 +13,9 @@ interface TParams {
 
 export default async function Page({ params }: TParams) {
   const session = await auth();
+
   const user = session?.user;
+
   const encodedParams = params.cocktail[0];
   const decodedParams = encodedParams.replace(/%3D/g, '=').replace(/%26/g, '&');
   const paramsArray = decodedParams.split('&');
@@ -27,22 +29,29 @@ export default async function Page({ params }: TParams) {
     level,
   );
 
-  let isFavourite = false;
-  if (user && recommedation) {
-    isFavourite = await checkIsUserFavourite(
-      user.email,
+  if (!user) {
+    return (
+      <main>
+        <Cocktail cocktail={recommedation} isFavourite={isFavourite} />
+      </main>
+    );
+  } else {
+    const userEmail = user?.email;
+    const isFavourite = await checkIsUserFavourite(
+      userEmail,
       recommedation.cocktail_id,
     );
-  }
+    console.log(user, 'user');
 
-  return (
-    <main>
-      {user && <>hello {user.name}</>}
-      <Cocktail
-        cocktail={recommedation}
-        user={user}
-        isFavourite={isFavourite}
-      />
-    </main>
-  );
+    return (
+      <main>
+        {user && <>hello {user.name}</>}
+        <Cocktail
+          cocktail={recommedation}
+          user={user}
+          isFavourite={isFavourite}
+        />
+      </main>
+    );
+  }
 }

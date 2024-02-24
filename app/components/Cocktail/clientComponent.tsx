@@ -1,10 +1,10 @@
-import { TCocktail, TUser } from '../../lib/definitions';
+import { TCocktail, TUserFromParams } from '../../lib/definitions';
 import AddToFavouritesForm from '../AddToFavouritesForm/clientComponent';
 import ReviewForm from '../ReviewForm/clientComponent';
 
 type TCocktails = {
   cocktail: TCocktail;
-  user: TUser | null;
+  user?: TUserFromParams;
   isFavourite: boolean;
 };
 
