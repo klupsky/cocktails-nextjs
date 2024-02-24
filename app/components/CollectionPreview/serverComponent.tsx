@@ -13,7 +13,7 @@ export default async function CollectionPreview() {
           {previewCocktails.map((preview: TPreviewCocktail, i: number) => (
             <div className="carouselInsideStyle" key={`cocktailid-${i}`}>
               <div>
-                <Link href={`/collection/${preview.id}`}>
+                <Link href={`/collection/${preview.slug}`}>
                   <Image
                     src={`/images/cocktail/${preview.id}.svg`}
                     alt={preview.name}
@@ -23,7 +23,7 @@ export default async function CollectionPreview() {
                 </Link>
               </div>
               <div>
-                <Link href={`/collection/${preview.id}`}>{preview.name}</Link>
+                <Link href={`/collection/${preview.name}`}>{preview.slug}</Link>
               </div>
             </div>
           ))}

@@ -16,7 +16,7 @@ export default function ReviewForm({
 }) {
   const grades = [0, 1, 2, 3, 4];
 
-  const initialState = { message: null, errors: {}, rating: 0 };
+  const initialState = { message: null, errors: {} };
 
   const [state, dispatch] = useFormState(createReview, initialState);
 

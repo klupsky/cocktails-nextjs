@@ -4,6 +4,7 @@ import Cocktail from '../../../components/Cocktail/clientComponent';
 import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
+  getFavouritesSumOfCocktail,
   getRecommendationBasedOnUrlAndDatabase,
 } from '../../../lib/data';
 
@@ -31,10 +32,15 @@ export default async function Page({ params }: TParams) {
     level,
   );
 
+  const favouritesSum = await getFavouritesSumOfCocktail(
+    recommedation.cocktail_id,
+  );
+
   if (!user) {
     return (
       <main>
         <Cocktail cocktail={recommedation} />
+        <FavouritesSum favouritesSum={favouritesSum} />
       </main>
     );
   } else {
@@ -44,7 +50,6 @@ export default async function Page({ params }: TParams) {
       userEmail,
       recommedation.cocktail_id,
     );
-    console.log(user);
     return (
       <main>
         <>hello {user.name}</>

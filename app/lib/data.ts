@@ -324,7 +324,23 @@ export async function checkIsUserFavourite(
   }
 }
 
-// GET ALL REVIEWS
+// GET SUM OF FAVOURITES
+
+export async function getFavouritesSumOfCocktail(cocktailId: number) {
+  noStore();
+  try {
+    const favourites = await sql`
+      SELECT id
+      FROM favourites
+      WHERE cocktail_id = ${cocktailId}
+    `;
+
+    return favourites.rows.length;
+  } catch (error) {
+    console.error('Failed to fetch favourite:', error);
+    throw new Error('Failed to fetch favourite.');
+  }
+}
 
 // CHECK USER RATING
 

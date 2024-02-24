@@ -11,6 +11,7 @@ export type TUserFromParams = {
 };
 
 export type TCocktail = {
+  id: number;
   name: string;
   cocktail_id: number;
   level: number;
