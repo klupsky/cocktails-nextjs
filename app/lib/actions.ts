@@ -203,3 +203,68 @@ export async function toggleFavourite(formData: FormData) {
     };
   }
 }
+
+// ADD RATING
+//  form validation
+
+const ReviewFormSchema = z.object({
+  id: z.string(),
+  cocktailId: z.string(),
+  userEmail: z.string(),
+  userName: z.string(),
+  review: z.string().nullable(),
+  rating: z.string(),
+});
+
+const CreateReview = ReviewFormSchema.omit({ id: true, date: true });
+
+export type TReviewState = {
+  errors?: {
+    cocktailId?: string[];
+    userEmail?: string[];
+    userName?: string[];
+    review?: string[];
+    rating?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createReview(
+  prevState: TReviewState,
+  formData: FormData,
+): Promise<TReviewState> {
+  // Validate form using Zod
+  const validatedFields = CreateReview.safeParse({
+    userEmail: formData.get('userEmail'),
+    cocktailId: formData.get('cocktailId'),
+    userName: formData.get('userName'),
+    review: formData.get('review'),
+    rating: formData.get('rating'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields.',
+    };
+  }
+
+  const { cocktailId, userEmail, userName, review, rating } =
+    validatedFields.data;
+  const id = uuidv4();
+
+  try {
+    await sql`
+      INSERT INTO reviews (id, user_name, user_email, review, rating, cocktail_id)
+      VALUES (${id}, ${userName}, ${userEmail}, ${review}, ${rating}, ${cocktailId})
+      ON CONFLICT (id) DO NOTHING;
+    `;
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
+  }
+
+  return { errors: {}, message: null }; // Return an empty state as success indicator
+}

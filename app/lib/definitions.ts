@@ -7,10 +7,10 @@ export type TUser = {
 
 export type TCocktail = {
   name: string;
-  cocktailId: number;
+  cocktail_id: number;
   level: number;
-  levelId: number;
-  flavourId: number;
+  level_id: number;
+  flavour_id: number;
   flavour: string;
   flavourcolour: string;
   spirit: string;

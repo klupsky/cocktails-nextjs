@@ -313,6 +313,51 @@ async function seedFavourites(client) {
   }
 }
 
+async function seedReviews(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Drop the "reviews" table if it exists
+    await client.sql`DROP TABLE IF EXISTS favourites`;
+    console.log(`Dropped "reviews" table`);
+
+    // Create the "reviews" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS reviews (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_email TEXT NOT NULL,
+        user_name varchar(50) NOT NULL,
+			  review varchar(500) NOT NULL,
+			  rating integer NOT NULL,
+        cocktail_id integer NOT NULL
+      );
+    `;
+
+    console.log(`Created "reviews" table`);
+
+    // Insert data into the "reviews" table
+    const insertedReviews = await Promise.all(
+      reviews.map(
+        (review) => client.sql`
+        INSERT INTO reviews (user_email, user_name, review, rating, cocktail_id)
+        VALUES (${review.user_email}, ${review.user_name}, ${review.review}, ${review.rating}, ${review.cocktail_id})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedReviews.length} reviews`);
+
+    return {
+      createTable,
+      reviews: insertedReviews,
+    };
+  } catch (error) {
+    console.error('Error seeding reviews:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
   // await seedCocktails(client);
@@ -321,7 +366,8 @@ async function main() {
   // await seedSpirits(client);
   // await seedCategories(client);
 
-  await seedUsers(client);
+  // await seedReviews(client);
+  // await seedUsers(client);
   // await seedFavourites(client);
 
   await client.end();

@@ -16,3 +16,11 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+:root {
+  --c-yellow: #e0ea79;
+  --c-purple: #bbbaf9;
+  --c-red: #e75c3c;
+  --c-blue: #beebf6;
+  --c-pink: #ffc6dc;
+}
