@@ -6,8 +6,8 @@ export type TUser = {
 };
 
 export type TUserFromParams = {
-  name?: string | null | undefined;
-  email?: string | null | undefined;
+  name: string | undefined;
+  email: string | undefined;
 };
 
 export type TCocktail = {

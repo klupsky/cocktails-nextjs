@@ -15,7 +15,7 @@ export default function Collection({
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [cocktailList, setCocktailList] = useState(collection);
 
-  const filterCocktails = (category) => {
+  const filterCocktails = (category: any) => {
     setCocktailList(
       collection.filter((cocktail) => cocktail.category === category),
     );

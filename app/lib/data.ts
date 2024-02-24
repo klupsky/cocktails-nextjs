@@ -305,7 +305,7 @@ export async function getSingleCocktailFromCollection(cocktail: string) {
 // CHECK IF COCKTAIL IS A USERS FAVOURITE
 
 export async function checkIsUserFavourite(
-  userEmail: string | null | undefined,
+  userEmail: string,
   cocktailId: number,
 ) {
   noStore();

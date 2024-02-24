@@ -1,5 +1,7 @@
 import { auth } from '@/auth';
+import AddToFavouritesForm from '../../../components/AddToFavouritesForm/clientComponent';
 import Cocktail from '../../../components/Cocktail/clientComponent';
+import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
   getRecommendationBasedOnUrlAndDatabase,
@@ -32,24 +34,30 @@ export default async function Page({ params }: TParams) {
   if (!user) {
     return (
       <main>
-        <Cocktail cocktail={recommedation} isFavourite={isFavourite} />
+        <Cocktail cocktail={recommedation} />
       </main>
     );
   } else {
-    const userEmail = user?.email;
+    const userEmail = user?.email || '';
+
     const isFavourite = await checkIsUserFavourite(
       userEmail,
       recommedation.cocktail_id,
     );
-    console.log(user, 'user');
-
+    console.log(user);
     return (
       <main>
-        {user && <>hello {user.name}</>}
-        <Cocktail
-          cocktail={recommedation}
-          user={user}
+        <>hello {user.name}</>
+        <Cocktail cocktail={recommedation} />
+        <AddToFavouritesForm
           isFavourite={isFavourite}
+          userEmail={user.email || ''}
+          cocktailId={recommedation.cocktail_id}
+        />
+        <ReviewForm
+          userEmail={user.email || ''}
+          userName={user.name || ''}
+          cocktailId={recommedation.cocktail_id}
         />
       </main>
     );
