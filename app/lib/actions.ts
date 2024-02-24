@@ -166,7 +166,7 @@ export async function createRecommendation(
 
 // ADD TO FAVOURITES
 
-export async function addToFavourites(formData: FormData) {
+export async function toggleFavourite(formData: FormData) {
   const userEmail = formData.get('userEmail');
   const cocktailId = formData.get('cocktailId');
   // Check if the values are present and convert them to strings
@@ -200,58 +200,6 @@ export async function addToFavourites(formData: FormData) {
     console.error('Database error:', error);
     return {
       message: 'Database Error: Failed to add or remove from favourites.',
-    };
-  }
-}
-
-// REMOVE FROM FAVOURITES
-
-export async function removeFromFavourites(formData: FormData) {
-  const userEmail = String(formData.get('userEmail'));
-  const cocktailId = String(formData.get('cocktailId'));
-
-  try {
-    await sql`
-      DELETE FROM favourites
-      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
-    `;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: 'Database Error: Failed to remove from favourites.',
-    };
-  }
-}
-
-// CHECK IF FAVOURITE
-
-export async function checkFavourites(formData: FormData) {
-  const userEmail = formData.get('userEmail');
-  const cocktailId = formData.get('cocktailId');
-
-  // Check if the values are present and convert them to strings
-  const userEmailValue = userEmail ? userEmail.toString() : null;
-  const cocktailIdValue = cocktailId ? cocktailId.toString() : null;
-
-  try {
-    await sql`
-    SELECT
-      favourites.id
-
-    FROM
-      favourites
-
-    WHERE
-      favourites.user_email = ${userEmailValue} AND
-      favourites.cocktail_id = ${cocktailIdValue}
-
-  `;
-    return favouritesCheck.rows.length > 0;
-  } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: 'Database Error: Failed to fetch favourites.',
-      error: error.message, // You might want to include the actual error message for debugging.
     };
   }
 }
