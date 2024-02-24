@@ -249,22 +249,37 @@ export async function createReview(
       message: 'Missing Fields.',
     };
   }
-
   const { cocktailId, userEmail, userName, review, rating } =
     validatedFields.data;
   const id = uuidv4();
 
   try {
-    await sql`
-      INSERT INTO reviews (id, user_name, user_email, review, rating, cocktail_id)
-      VALUES (${id}, ${userName}, ${userEmail}, ${review}, ${rating}, ${cocktailId})
-      ON CONFLICT (id) DO NOTHING;
+    // Check if the user has already rated the cocktail
+    const existingRating = await sql`
+      SELECT id FROM reviews
+      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
+
+    if (existingRating.rows.length > 0) {
+      // If the user has already rated, update the existing record
+      await sql`
+        UPDATE reviews
+        SET user_name = ${userName}, review = ${review}, rating = ${rating}
+        WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
+      `;
+    } else {
+      // If the user hasn't rated yet, insert a new record
+      await sql`
+        INSERT INTO reviews (id, user_name, user_email, review, rating, cocktail_id)
+        VALUES (${id}, ${userName}, ${userEmail}, ${review}, ${rating}, ${cocktailId})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+    }
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'Database Error: Failed to Create/Update Review.',
     };
   }
 
-  return { errors: {}, message: null }; // Return an empty state as success indicator
+  return { errors: {}, message: null }; // Return an empty state as a success indicator
 }

@@ -318,7 +318,7 @@ async function seedReviews(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     // Drop the "reviews" table if it exists
-    await client.sql`DROP TABLE IF EXISTS favourites`;
+    await client.sql`DROP TABLE IF EXISTS reviews`;
     console.log(`Dropped "reviews" table`);
 
     // Create the "reviews" table if it doesn't exist
@@ -366,7 +366,7 @@ async function main() {
   // await seedSpirits(client);
   // await seedCategories(client);
 
-  // await seedReviews(client);
+  await seedReviews(client);
   // await seedUsers(client);
   // await seedFavourites(client);
 

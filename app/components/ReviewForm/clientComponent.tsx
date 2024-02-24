@@ -20,7 +20,6 @@ export default function ReviewForm({
 
   const [state, dispatch] = useFormState(createReview, initialState);
 
-  console.log(state);
   return (
     <form action={dispatch}>
       <input type="hidden" name="userEmail" value={userEmail} />
