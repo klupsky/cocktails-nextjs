@@ -1,4 +1,5 @@
 import { sql } from '@vercel/postgres';
+import { unstable_noStore as noStore } from 'next/cache';
 import {
   TCategory,
   TCocktail,
@@ -305,6 +306,7 @@ export async function checkIsUserFavourite(
   userEmail: string,
   cocktailId: number,
 ) {
+  noStore();
   try {
     // Check if the combination already exists
     const existingFavourite = await sql`

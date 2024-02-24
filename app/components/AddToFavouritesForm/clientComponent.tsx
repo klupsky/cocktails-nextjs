@@ -1,36 +1,45 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toggleFavourite } from '../../lib/actions';
-import { checkIsUserFavourite } from '../../lib/data';
 
 export default function AddToFavouritesForm({
   userEmail,
   cocktailId,
+  isFavourite: initialIsFavourite,
 }: {
   userEmail: string;
   cocktailId: number;
+  isFavourite: boolean;
 }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(initialIsFavourite);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  console.log(userEmail, cocktailId, isFavorite, 'status');
+    try {
+      await toggleFavourite(new FormData(e.target));
 
+      setIsFavourite((prevIsFavourite) => !prevIsFavourite);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
   return (
-    <form action={toggleFavourite}>
+    <form onSubmit={handleSubmit}>
       <input type="hidden" name="userEmail" value={userEmail} />
       <input type="hidden" name="cocktailId" value={cocktailId} />
 
       <button type="submit">
         <Image
           src={
-            isFavorite
+            isFavourite
               ? '/../../images/components/heart2.svg'
               : '/../../images/components/heart1.svg'
           }
           width={24}
           height={24}
-          alt={isFavorite ? 'remove from favourites' : 'add to favourites'}
+          alt={isFavourite ? 'remove from favourites' : 'add to favourites'}
         />
       </button>
     </form>

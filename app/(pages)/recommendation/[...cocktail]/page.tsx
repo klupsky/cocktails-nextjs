@@ -1,6 +1,9 @@
 import { auth } from '@/auth';
 import Cocktail from '../../../components/Cocktail/clientComponent';
-import { getRecommendationBasedOnUrlAndDatabase } from '../../../lib/data';
+import {
+  checkIsUserFavourite,
+  getRecommendationBasedOnUrlAndDatabase,
+} from '../../../lib/data';
 
 interface TParams {
   params: {
@@ -24,10 +27,22 @@ export default async function Page({ params }: TParams) {
     level,
   );
 
+  let isFavourite = false;
+  if (user && recommedation) {
+    isFavourite = await checkIsUserFavourite(
+      user.email,
+      recommedation.cocktail_id,
+    );
+  }
+
   return (
     <main>
       {user && <>hello {user.name}</>}
-      <Cocktail cocktail={recommedation} user={user} />
+      <Cocktail
+        cocktail={recommedation}
+        user={user}
+        isFavourite={isFavourite}
+      />
     </main>
   );
 }

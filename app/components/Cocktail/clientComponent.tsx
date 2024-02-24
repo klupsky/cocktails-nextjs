@@ -1,21 +1,21 @@
-'use client';
 import { TCocktail, TUser } from '../../lib/definitions';
 import AddToFavouritesForm from '../AddToFavouritesForm/clientComponent';
 import ReviewForm from '../ReviewForm/clientComponent';
 
 type TCocktails = {
   cocktail: TCocktail;
-  user: TUser;
+  user: TUser | null;
+  isFavourite: boolean;
 };
 
-export default function Cocktail({ cocktail, user }: TCocktails) {
-  console.log(user, cocktail);
+export default function Cocktail({ cocktail, user, isFavourite }: TCocktails) {
   return (
     <section>
       {cocktail.name}
       {cocktail.cocktail_id}
       {user && (
         <AddToFavouritesForm
+          isFavourite={isFavourite}
           userEmail={user.email}
           cocktailId={cocktail.cocktail_id}
         />
