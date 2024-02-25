@@ -315,7 +315,6 @@ export async function checkIsUserFavourite(
       FROM favourites
       WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
-    console.log(existingFavourite, 'existingFavourite');
 
     return existingFavourite.rows.length > 0;
   } catch (error) {
@@ -345,28 +344,20 @@ export async function getFavouritesSumOfCocktail(cocktailId: number) {
 
 // CHECK USER RATING
 
-export async function checkUserRating(userEmail: string, cocktailId: number) {
-  noStore();
+export async function checkUserRating(
+  userEmail: string,
+  cocktailId: number,
+): Promise<number> {
   try {
-    const userRating = await sql`
-    SELECT
-      rating,
-      users.username,
-      cocktail_id
-
-    FROM
-      reviews,
-      users
-
-    WHERE
-      cocktail_id = ${cocktailId} AND
+    const result = await sql`
+      SELECT rating FROM reviews
+      WHERE cocktail_id = ${cocktailId} AND
       user_email = ${userEmail}
     `;
-
-    return userRating.rows;
+    return result.rows[0].rating;
   } catch (error) {
-    console.error('Failed to fetch rating:', error);
-    throw new Error('Failed to fetch rating.');
+    console.error('Database Error:', error);
+    return null; // Handle database error
   }
 }
 
@@ -410,6 +401,7 @@ export async function getCocktailReviews(cocktailId: number) {
     WHERE
       cocktail_id = ${cocktailId}
   `;
+    console.log(cocktailReviews.rows, 'hello all reviews of cocktail');
     return cocktailReviews.rows;
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
@@ -455,7 +447,7 @@ export async function getUserFavourites(userEmail: string) {
 export async function getCocktailRating(cocktailId: number) {
   noStore();
   try {
-    const collectionCocktail = await sql`
+    const cocktailRating = await sql`
     SELECT
       reviews.rating,
       reviews.id
@@ -470,7 +462,9 @@ export async function getCocktailRating(cocktailId: number) {
 
 
       `;
-    return collectionCocktail.rows;
+    console.log(cocktailRating.rows, 'hello all reviews of cocktail');
+
+    return cocktailRating.rows;
   } catch (error) {
     console.error('Failed to fetch favourite:', error);
     throw new Error('Failed to fetch favourite.');

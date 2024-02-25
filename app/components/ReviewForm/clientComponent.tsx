@@ -9,12 +9,16 @@ export default function ReviewForm({
   userEmail,
   cocktailId,
   userName,
+  userRating: initialRating,
 }: {
   userEmail?: string;
   cocktailId: number;
   userName: string;
+  userRating: number;
 }) {
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(initialRating);
+
+  console.log(userEmail, cocktailId, userName, initialRating);
 
   const grades = [0, 1, 2, 3, 4];
 

@@ -1,9 +1,11 @@
+import FavouritesSum from '@/app/components/FavouritesSum/clientComponent';
 import { auth } from '@/auth';
 import AddToFavouritesForm from '../../../components/AddToFavouritesForm/clientComponent';
 import Cocktail from '../../../components/Cocktail/clientComponent';
 import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
+  checkUserRating,
   getFavouritesSumOfCocktail,
   getRecommendationBasedOnUrlAndDatabase,
 } from '../../../lib/data';
@@ -50,6 +52,11 @@ export default async function Page({ params }: TParams) {
       userEmail,
       recommedation.cocktail_id,
     );
+
+    const userRating = await checkUserRating(
+      userEmail,
+      recommedation.cocktail_id,
+    );
     return (
       <main>
         <>hello {user.name}</>
@@ -63,6 +70,7 @@ export default async function Page({ params }: TParams) {
           userEmail={user.email || ''}
           userName={user.name || ''}
           cocktailId={recommedation.cocktail_id}
+          userRating={userRating}
         />
       </main>
     );
