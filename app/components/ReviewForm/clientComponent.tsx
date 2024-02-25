@@ -14,6 +14,8 @@ export default function ReviewForm({
   cocktailId: number;
   userName: string;
 }) {
+  const [rating, setRating] = useState(3);
+
   const grades = [0, 1, 2, 3, 4];
 
   const initialState = { message: null, errors: {} };
@@ -36,7 +38,7 @@ export default function ReviewForm({
               name="rating"
               value={index + 1}
             />
-            <Star filled={index + 1 <= state.rating} />
+            <Star filled={index + 1 <= rating} />
           </label>
         ))}
       </div>

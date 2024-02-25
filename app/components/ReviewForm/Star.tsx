@@ -5,7 +5,7 @@ const Star = ({ filled }: { filled: boolean }) => (
     width="35"
     height="35"
     viewBox="0 0 24 24"
-    fill="none"
+    fill={filled ? 'var(--c-yellow)' : 'none'}
     stroke="#000000"
     strokeWidth="0.7"
     strokeLinecap="round"

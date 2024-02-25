@@ -332,7 +332,8 @@ export async function getFavouritesSumOfCocktail(cocktailId: number) {
     const favourites = await sql`
       SELECT id
       FROM favourites
-      WHERE cocktail_id = ${cocktailId}
+      WHERE cocktail_id = ${cocktailId} AND
+      favourites.cocktail_id = ${cocktailId}
     `;
 
     return favourites.rows.length;
@@ -347,15 +348,129 @@ export async function getFavouritesSumOfCocktail(cocktailId: number) {
 export async function checkUserRating(userEmail: string, cocktailId: number) {
   noStore();
   try {
-    // Check if the combination already exists
-    const existingFavourite = await sql`
-      SELECT id
-      FROM favourites
-      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
-    `;
-    console.log(existingFavourite, 'existingFavourite');
+    const userRating = await sql`
+    SELECT
+      rating,
+      users.username,
+      cocktail_id
 
-    return existingFavourite.rows.length > 0;
+    FROM
+      reviews,
+      users
+
+    WHERE
+      cocktail_id = ${cocktailId} AND
+      user_email = ${userEmail}
+    `;
+
+    return userRating.rows;
+  } catch (error) {
+    console.error('Failed to fetch rating:', error);
+    throw new Error('Failed to fetch rating.');
+  }
+}
+
+// CHECK USER REVIEW
+
+export async function checkUserReview(userEmail: string, cocktailId: number) {
+  noStore();
+  try {
+    const userReview = await sql`
+    SELECT
+      review,
+      users.username,
+      cocktail_id
+
+    FROM
+      reviews,
+      users
+
+    WHERE
+      cocktail_id = ${cocktailId} AND
+      user_email = ${userEmail}
+    `;
+
+    return userReview.rows;
+  } catch (error) {
+    console.error('Failed to fetch review:', error);
+    throw new Error('Failed to fetch review.');
+  }
+}
+
+// GET ALL REVIEWS OF A COCKTAIL
+
+export async function getCocktailReviews(cocktailId: number) {
+  noStore();
+  try {
+    const cocktailReviews = await sql`
+    SELECT
+      *
+    FROM
+      reviews
+    WHERE
+      cocktail_id = ${cocktailId}
+  `;
+    return cocktailReviews.rows;
+  } catch (error) {
+    console.error('Failed to fetch reviews:', error);
+    throw new Error('Failed to fetch reviews.');
+  }
+}
+
+// GET USER FAVOURITES
+
+export async function getUserFavourites(userEmail: string) {
+  noStore();
+  try {
+    const favouriteCocktails = await sql`
+    SELECT
+      favourites.id,
+      favourites.user_id,
+      favourites.cocktail_id,
+      users.username,
+      cocktails.name,
+      flavours.colour AS flavourcolour
+
+    FROM
+      favourites,
+      cocktails,
+      users,
+      flavours
+
+    WHERE
+      favourites.user_email = ${userEmail} AND
+      users.id = favourites.user_id AND
+      favourites.cocktail_id = cocktails.id AND
+      cocktails.flavour_id = flavours.id
+  `;
+    return favouriteCocktails.rows;
+  } catch (error) {
+    console.error('Failed to fetch favourite:', error);
+    throw new Error('Failed to fetch favourite.');
+  }
+}
+
+// GET RATINGS OF COCKTAIL
+
+export async function getCocktailRating(cocktailId: number) {
+  noStore();
+  try {
+    const collectionCocktail = await sql`
+    SELECT
+      reviews.rating,
+      reviews.id
+
+    FROM
+      cocktails,
+      reviews
+
+    WHERE
+      cocktails.id = ${cocktailId} AND
+      reviews.cocktail_id = ${cocktailId}
+
+
+      `;
+    return collectionCocktail.rows;
   } catch (error) {
     console.error('Failed to fetch favourite:', error);
     throw new Error('Failed to fetch favourite.');
