@@ -1,8 +1,10 @@
 import { auth } from '@/auth';
+import AddToFavouritesForm from '../../../components/AddToFavouritesForm/clientComponent';
 import Cocktail from '../../../components/Cocktail/clientComponent';
 import FavouritesSum from '../../../components/FavouritesSum/clientComponent';
 import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
+  checkIsUserFavourite,
   checkUserRating,
   getFavouritesSumOfCocktail,
   getSingleCocktailFromCollection,
@@ -32,14 +34,20 @@ export default async function Page({ params }: TParams) {
     );
   } else {
     const userEmail = user?.email || '';
-
+    const isFavourite = await checkIsUserFavourite(
+      userEmail,
+      collectionCocktail.id,
+    );
     const userRating = await checkUserRating(userEmail, collectionCocktail.id);
 
     return (
       <main>
         <Cocktail cocktail={collectionCocktail} />
-        <FavouritesSum favouritesSum={favouritesSum} />
-
+        <AddToFavouritesForm
+          isFavourite={isFavourite}
+          userEmail={user.email || ''}
+          cocktailId={collectionCocktail.id}
+        />
         <ReviewForm
           userEmail={user.email || ''}
           userName={user.name || ''}

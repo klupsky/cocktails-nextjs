@@ -14,18 +14,21 @@ export default function ReviewForm({
   userEmail?: string;
   cocktailId: number;
   userName: string;
-  userRating: number;
+  userRating: number | null;
 }) {
-  const [rating, setRating] = useState(initialRating);
+  const [rating, setRating] = useState(initialRating ?? 0);
 
-  console.log(userEmail, cocktailId, userName, initialRating);
+  console.log(initialRating, 'initial');
 
   const grades = [0, 1, 2, 3, 4];
 
   const initialState = { message: null, errors: {} };
 
   const [state, dispatch] = useFormState(createReview, initialState);
-
+  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newRating = parseInt(event.target.value, 10);
+    setRating(newRating);
+  };
   return (
     <form action={dispatch}>
       <input type="hidden" name="userEmail" value={userEmail} />
@@ -41,6 +44,7 @@ export default function ReviewForm({
               id={`rating-${index}`}
               name="rating"
               value={index + 1}
+              onChange={handleRatingChange}
             />
             <Star filled={index + 1 <= rating} />
           </label>

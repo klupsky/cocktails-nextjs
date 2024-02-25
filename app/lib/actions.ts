@@ -261,6 +261,7 @@ export async function createReview(
     rating,
     'cocktailId, userEmail, userName, review, rating',
   );
+  noStore();
 
   try {
     // Check if the user has already rated the cocktail
@@ -269,9 +270,8 @@ export async function createReview(
       WHERE user_email = ${userEmail}
     `;
 
-    console.log(existingRating, 'existingRating');
-
     if (existingRating.rows.length > 0) {
+      console.log('it exists again');
       // If the user has already rated, update the existing record
       await sql`
         UPDATE reviews
@@ -279,6 +279,8 @@ export async function createReview(
         WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
       `;
     } else {
+      console.log('it does not exist');
+
       // If the user hasn't rated yet, insert a new record
       await sql`
         INSERT INTO reviews (id, user_name, user_email, review, rating, cocktail_id)

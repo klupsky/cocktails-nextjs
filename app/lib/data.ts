@@ -347,7 +347,7 @@ export async function getFavouritesSumOfCocktail(cocktailId: number) {
 export async function checkUserRating(
   userEmail: string,
   cocktailId: number,
-): Promise<number> {
+): Promise<number | null> {
   try {
     const result = await sql`
       SELECT rating FROM reviews
