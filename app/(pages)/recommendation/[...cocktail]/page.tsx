@@ -5,7 +5,7 @@ import Cocktail from '../../../components/Cocktail/clientComponent';
 import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
-  checkUserRating,
+  checkUserReview,
   getFavouritesSumOfCocktail,
   getRecommendationBasedOnUrlAndDatabase,
 } from '../../../lib/data';
@@ -53,10 +53,16 @@ export default async function Page({ params }: TParams) {
       recommedation.cocktail_id,
     );
 
-    const userRating = await checkUserRating(
+    const userReviewData = await checkUserReview(
       userEmail,
       recommedation.cocktail_id,
     );
+
+    console.log(userReviewData, 'data');
+
+    const { rating } = userReviewData ?? {};
+    const { review } = userReviewData ?? {};
+
     return (
       <main>
         <>hello {user.name}</>
@@ -70,7 +76,7 @@ export default async function Page({ params }: TParams) {
           userEmail={user.email || ''}
           userName={user.name || ''}
           cocktailId={recommedation.cocktail_id}
-          userRating={userRating}
+          userRating={rating}
         />
       </main>
     );

@@ -344,47 +344,22 @@ export async function getFavouritesSumOfCocktail(cocktailId: number) {
 
 // CHECK USER RATING
 
-export async function checkUserRating(
-  userEmail: string,
-  cocktailId: number,
-): Promise<number | null> {
+export async function checkUserReview(userEmail: string, cocktailId: number) {
+  noStore();
+
   try {
     const result = await sql`
-      SELECT rating FROM reviews
-      WHERE cocktail_id = ${cocktailId} AND
-      user_email = ${userEmail}
+      SELECT * FROM reviews
+      WHERE user_email = ${userEmail}
+      AND cocktail_id = ${cocktailId}
     `;
-    return result.rows[0].rating;
+
+    console.log(result.rows, 'user rating');
+
+    return result.rows[0];
   } catch (error) {
     console.error('Database Error:', error);
     return null; // Handle database error
-  }
-}
-
-// CHECK USER REVIEW
-
-export async function checkUserReview(userEmail: string, cocktailId: number) {
-  noStore();
-  try {
-    const userReview = await sql`
-    SELECT
-      review,
-      users.username,
-      cocktail_id
-
-    FROM
-      reviews,
-      users
-
-    WHERE
-      cocktail_id = ${cocktailId} AND
-      user_email = ${userEmail}
-    `;
-
-    return userReview.rows;
-  } catch (error) {
-    console.error('Failed to fetch review:', error);
-    throw new Error('Failed to fetch review.');
   }
 }
 

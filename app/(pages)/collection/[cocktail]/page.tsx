@@ -5,7 +5,7 @@ import FavouritesSum from '../../../components/FavouritesSum/clientComponent';
 import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
-  checkUserRating,
+  checkUserReview,
   getFavouritesSumOfCocktail,
   getSingleCocktailFromCollection,
 } from '../../../lib/data';
@@ -38,7 +38,14 @@ export default async function Page({ params }: TParams) {
       userEmail,
       collectionCocktail.id,
     );
-    const userRating = await checkUserRating(userEmail, collectionCocktail.id);
+
+    const userReviewData = await checkUserReview(
+      userEmail,
+      collectionCocktail.id,
+    );
+
+    const { rating } = userReviewData ?? {};
+    const { review } = userReviewData ?? {};
 
     return (
       <main>
@@ -52,7 +59,7 @@ export default async function Page({ params }: TParams) {
           userEmail={user.email || ''}
           userName={user.name || ''}
           cocktailId={collectionCocktail.id}
-          userRating={userRating}
+          userRating={rating}
         />
       </main>
     );

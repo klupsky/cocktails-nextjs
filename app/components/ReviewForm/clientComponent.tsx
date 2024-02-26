@@ -18,8 +18,6 @@ export default function ReviewForm({
 }) {
   const [rating, setRating] = useState(initialRating ?? 0);
 
-  console.log(initialRating, 'initial');
-
   const grades = [0, 1, 2, 3, 4];
 
   const initialState = { message: null, errors: {} };

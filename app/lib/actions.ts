@@ -267,7 +267,7 @@ export async function createReview(
     // Check if the user has already rated the cocktail
     const existingRating = await sql`
       SELECT * FROM reviews
-      WHERE user_email = ${userEmail}
+      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
 
     if (existingRating.rows.length > 0) {
