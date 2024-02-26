@@ -259,25 +259,11 @@ export async function createReview(
   try {
     // Check if the user has already reviewed the cocktail
     const existingReview = await sql`
-      SELECT * FROM reviews
+      SELECT rating FROM reviews
       WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
 
-    if (
-      existingReview.rows.length > 0 &&
-      existingReview.rows[0].review !== null
-    ) {
-      console.log('Review exists');
-      // If the user has already rated or reviewed, update the existing record
-      await sql`
-        UPDATE reviews
-        SET user_name = ${userName}, review = ${review}
-        WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
-      `;
-    } else if (
-      existingReview.rows.length > 0 &&
-      existingReview.rows[0].rating !== null
-    ) {
+    if (existingReview.rows.length > 0) {
       console.log('Rating exists');
       // If the user has already rated or reviewed, update the existing record
       await sql`
@@ -286,7 +272,7 @@ export async function createReview(
         WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
       `;
     } else {
-      console.log('Rating and review do not exist');
+      console.log('Rating does not exist');
 
       // If the user hasn't rated or reviewed yet, insert a new record
       await sql`

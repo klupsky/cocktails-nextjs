@@ -10,7 +10,7 @@ export default function ReviewForm({
   cocktailId,
   userName,
   userRating: initialRating,
-  userReview: initialReview,
+  userReview,
 }: {
   userEmail?: string;
   cocktailId: number;
@@ -19,7 +19,6 @@ export default function ReviewForm({
   userReview: string | null;
 }) {
   const [rating, setRating] = useState(initialRating ?? 0);
-  const [review, setReview] = useState(initialReview ?? '');
 
   const grades = [0, 1, 2, 3, 4];
 
@@ -30,18 +29,15 @@ export default function ReviewForm({
     const newRating = parseInt(event.target.value, 10);
     setRating(newRating);
   };
-  const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newReview = event.target.value;
-    setReview(newReview);
-  };
+
   return (
     <form action={dispatch}>
       <input type="hidden" name="userEmail" value={userEmail} />
       <input type="hidden" name="cocktailId" value={cocktailId} />
       <input type="hidden" name="userName" value={userName} />
       <label htmlFor="review">Review</label>
-      {review && review} hello
-      <input id="review" name="review" onChange={handleReviewChange} />
+      {userReview && userReview}
+      <input id="review" name="review" disabled={userReview ? true : false} />
       <div>
         {grades.map((grade, index) => (
           <label className="star" key={`star-${index + 1}`}>
