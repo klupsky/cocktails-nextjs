@@ -60,6 +60,7 @@ export default async function Page({ params }: TParams) {
           userName={user.name || ''}
           cocktailId={collectionCocktail.id}
           userRating={rating}
+          userReview={review}
         />
       </main>
     );

@@ -10,14 +10,16 @@ export default function ReviewForm({
   cocktailId,
   userName,
   userRating: initialRating,
+  userReview,
 }: {
   userEmail?: string;
   cocktailId: number;
   userName: string;
   userRating: number | null;
+  userReview: string | null;
 }) {
   const [rating, setRating] = useState(initialRating ?? 0);
-
+  console.log(userReview, 'userReview');
   const grades = [0, 1, 2, 3, 4];
 
   const initialState = { message: null, errors: {} };
@@ -33,7 +35,11 @@ export default function ReviewForm({
       <input type="hidden" name="cocktailId" value={cocktailId} />
       <input type="hidden" name="userName" value={userName} />
       <label htmlFor="review">Review</label>
-      <input id="review" name="review" />
+      <input
+        id="review"
+        name="review"
+        placeholder={userReview ? userReview : ''}
+      />
       <div>
         {grades.map((grade, index) => (
           <label className="star" key={`star-${index + 1}`}>

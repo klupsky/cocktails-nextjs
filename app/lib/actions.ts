@@ -213,7 +213,7 @@ const ReviewFormSchema = z.object({
   userEmail: z.string(),
   userName: z.string(),
   review: z.string().nullable(),
-  rating: z.string(),
+  rating: z.string().nullable(),
 });
 
 const CreateReview = ReviewFormSchema.omit({ id: true, date: true });
@@ -264,24 +264,30 @@ export async function createReview(
   noStore();
 
   try {
-    // Check if the user has already rated the cocktail
-    const existingRating = await sql`
-      SELECT * FROM reviews
+    // Check if the user has already reviewed the cocktail
+    const existingReview = await sql`
+      SELECT review FROM reviews
       WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
 
-    if (existingRating.rows.length > 0) {
-      console.log('it exists again');
-      // If the user has already rated, update the existing record
+    // Check if the user has already rated the cocktail
+    const existingRating = await sql`
+      SELECT rating FROM reviews
+      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
+    `;
+
+    if (existingRating.rows.length > 0 || existingReview.rows.length > 0) {
+      console.log('Rating or review exists');
+      // If the user has already rated or reviewed, update the existing record
       await sql`
         UPDATE reviews
         SET user_name = ${userName}, review = ${review}, rating = ${rating}
         WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
       `;
     } else {
-      console.log('it does not exist');
+      console.log('Rating and review do not exist');
 
-      // If the user hasn't rated yet, insert a new record
+      // If the user hasn't rated or reviewed yet, insert a new record
       await sql`
         INSERT INTO reviews (id, user_name, user_email, review, rating, cocktail_id)
         VALUES (${id}, ${userName}, ${userEmail}, ${review}, ${rating}, ${cocktailId})
