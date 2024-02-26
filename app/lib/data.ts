@@ -354,8 +354,6 @@ export async function checkUserReview(userEmail: string, cocktailId: number) {
       AND cocktail_id = ${cocktailId}
     `;
 
-    console.log(result.rows, 'user rating');
-
     return result.rows[0];
   } catch (error) {
     console.error('Database Error:', error);

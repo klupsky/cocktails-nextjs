@@ -253,35 +253,36 @@ export async function createReview(
     validatedFields.data;
   const id = uuidv4();
 
-  console.log(
-    cocktailId,
-    userEmail,
-    userName,
-    review,
-    rating,
-    'cocktailId, userEmail, userName, review, rating',
-  );
+  console.log(review, rating, 'review, rating');
   noStore();
 
   try {
     // Check if the user has already reviewed the cocktail
     const existingReview = await sql`
-      SELECT review FROM reviews
+      SELECT * FROM reviews
       WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
 
-    // Check if the user has already rated the cocktail
-    const existingRating = await sql`
-      SELECT rating FROM reviews
-      WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
-    `;
-
-    if (existingRating.rows.length > 0 || existingReview.rows.length > 0) {
-      console.log('Rating or review exists');
+    if (
+      existingReview.rows.length > 0 &&
+      existingReview.rows[0].review !== null
+    ) {
+      console.log('Review exists');
       // If the user has already rated or reviewed, update the existing record
       await sql`
         UPDATE reviews
-        SET user_name = ${userName}, review = ${review}, rating = ${rating}
+        SET user_name = ${userName}, review = ${review}
+        WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
+      `;
+    } else if (
+      existingReview.rows.length > 0 &&
+      existingReview.rows[0].rating !== null
+    ) {
+      console.log('Rating exists');
+      // If the user has already rated or reviewed, update the existing record
+      await sql`
+        UPDATE reviews
+        SET user_name = ${userName}, rating = ${rating}
         WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
       `;
     } else {
