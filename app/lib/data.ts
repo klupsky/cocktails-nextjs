@@ -395,12 +395,14 @@ export async function getUserFavourites(userEmail: string) {
       favourites,
       cocktails,
       users,
-      flavours
+      flavours,
+      reviews
 
     WHERE
       favourites.user_email = ${userEmail} AND
       favourites.cocktail_id = cocktails.id AND
-      cocktails.flavour_id = flavours.id
+      cocktails.flavour_id = flavours.id AND
+      reviews.cocktail_id = cocktails.id
   `;
     return favouriteCocktails.rows;
   } catch (error) {
@@ -430,10 +432,11 @@ export async function getCocktailRating(cocktailId: number) {
 
     const ratingsArray = cocktailRating.rows.map((row) => row.rating);
 
-    // Calculate average rating
     const averageRating = ratingsArray.length
-      ? ratingsArray.reduce((total, rating) => total + rating, 0) /
-        ratingsArray.length
+      ? Math.ceil(
+          ratingsArray.reduce((total, rating) => total + rating, 0) /
+            ratingsArray.length,
+        )
       : 0;
 
     return { ratings: cocktailRating.rows, averageRating };
