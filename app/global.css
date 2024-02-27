@@ -63,7 +63,7 @@ li {
   }
 
   .marquee-messapia {
-    @apply font-messapia text-2xl uppercase leading-tight tracking-normal text-black;
+    @apply font-messapia uppercase leading-tight tracking-normal text-black;
   }
 
   .marquee-apfel {
