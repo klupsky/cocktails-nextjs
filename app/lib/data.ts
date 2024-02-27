@@ -374,7 +374,6 @@ export async function getCocktailReviews(cocktailId: number) {
     WHERE
       cocktail_id = ${cocktailId}
   `;
-    console.log(cocktailReviews.rows, 'hello all reviews of cocktail');
     return cocktailReviews.rows;
   } catch (error) {
     console.error('Failed to fetch reviews:', error);
@@ -389,12 +388,8 @@ export async function getUserFavourites(userEmail: string) {
   try {
     const favouriteCocktails = await sql`
     SELECT
-      favourites.id,
-      favourites.user_id,
-      favourites.cocktail_id,
-      users.username,
-      cocktails.name,
-      flavours.colour AS flavourcolour
+      *,
+      cocktails.name as cocktailName
 
     FROM
       favourites,
@@ -404,7 +399,6 @@ export async function getUserFavourites(userEmail: string) {
 
     WHERE
       favourites.user_email = ${userEmail} AND
-      users.id = favourites.user_id AND
       favourites.cocktail_id = cocktails.id AND
       cocktails.flavour_id = flavours.id
   `;
@@ -432,12 +426,17 @@ export async function getCocktailRating(cocktailId: number) {
     WHERE
       cocktails.id = ${cocktailId} AND
       reviews.cocktail_id = ${cocktailId}
-
-
       `;
-    console.log(cocktailRating.rows, 'hello all reviews of cocktail');
 
-    return cocktailRating.rows;
+    const ratingsArray = cocktailRating.rows.map((row) => row.rating);
+
+    // Calculate average rating
+    const averageRating = ratingsArray.length
+      ? ratingsArray.reduce((total, rating) => total + rating, 0) /
+        ratingsArray.length
+      : 0;
+
+    return { ratings: cocktailRating.rows, averageRating };
   } catch (error) {
     console.error('Failed to fetch favourite:', error);
     throw new Error('Failed to fetch favourite.');

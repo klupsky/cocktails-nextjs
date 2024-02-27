@@ -21,11 +21,6 @@ export default function ReviewForm({
   const [rating, setRating] = useState(initialRating ?? 0);
   const [review, setReview] = useState(initialReview ?? '');
 
-  console.log(initialReview, 'initialReview frontend');
-  console.log(initialRating, 'initialRating frontend');
-
-  console.log(review, 'review frontend');
-
   const grades = [0, 1, 2, 3, 4];
 
   const initialState = {
@@ -39,13 +34,11 @@ export default function ReviewForm({
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newRating = parseInt(event.target.value, 10);
     setRating(newRating);
-    console.log(newRating, 'newRating');
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newReview = event.target.value;
     setReview(newReview);
-    console.log(newReview, 'newReview');
   };
 
   return (
@@ -61,12 +54,7 @@ export default function ReviewForm({
       />
       <label htmlFor="review">Review</label>
       {review && review} {initialReview && initialReview}
-      <input
-        id="review"
-        name="review"
-        // disabled={userReview ? true : false}
-        onChange={handleReviewChange}
-      />
+      <input id="review" name="review" onChange={handleReviewChange} />
       <div>
         {rating && rating} {initialRating && initialRating}
         {grades.map((grade, index) => (
@@ -84,7 +72,7 @@ export default function ReviewForm({
       </div>
       {state.errors?.rating &&
         state.errors.rating.map((error: string) => (
-          <p className="text-red" key={error}>
+          <p className="var(--c-red)" key={error}>
             {error}
           </p>
         ))}

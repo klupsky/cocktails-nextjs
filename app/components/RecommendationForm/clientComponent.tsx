@@ -79,24 +79,24 @@ export default function RecommendationForm({
         <div id="name-error" aria-live="polite" aria-atomic="true">
           {state.errors?.flavour &&
             state.errors.flavour.map((error: any) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
           {state.errors?.spirit &&
             state.errors.spirit.map((error: any) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
           {state.errors?.level &&
             state.errors.level.map((error: any) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
 
-          <p className="text-red">{state.message}</p>
+          <p className="var(--c-red)">{state.message}</p>
         </div>
 
         <button type="submit">Get a recommendation</button>

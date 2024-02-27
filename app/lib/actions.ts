@@ -270,8 +270,6 @@ export async function createReview(
     `;
 
     if (existingReview.rows.length > 0) {
-      console.log('Review exists');
-      console.log(existingReview.rows, 'existing');
       // If the user has already rated or reviewed, update the existing record
       await sql`
         UPDATE reviews

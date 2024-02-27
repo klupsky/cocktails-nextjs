@@ -6,6 +6,8 @@ import ReviewForm from '../../../components/ReviewForm/clientComponent';
 import {
   checkIsUserFavourite,
   checkUserReview,
+  getCocktailRating,
+  getCocktailReviews,
   getFavouritesSumOfCocktail,
   getSingleCocktailFromCollection,
 } from '../../../lib/data';
@@ -24,12 +26,27 @@ export default async function Page({ params }: TParams) {
 
   const collectionCocktail = await getSingleCocktailFromCollection(cocktail);
   const favouritesSum = await getFavouritesSumOfCocktail(collectionCocktail.id);
+  const allReviews = await getCocktailReviews(collectionCocktail.id);
+
+  const CocktailRatings = await getCocktailRating(collectionCocktail.id);
 
   if (!user) {
     return (
       <main>
         <Cocktail cocktail={collectionCocktail} />
         <FavouritesSum favouritesSum={favouritesSum} />
+
+        {CocktailRatings.averageRating && (
+          <>average rating: {CocktailRatings.averageRating}</>
+        )}
+        <ul>
+          {allReviews.map((review) => (
+            <li key={review.id}>
+              <p>{review.userName}</p>
+              <p>{review.review}</p>
+            </li>
+          ))}
+        </ul>
       </main>
     );
   } else {

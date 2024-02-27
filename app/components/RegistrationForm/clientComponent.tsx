@@ -20,7 +20,7 @@ export default function RegistrationForm() {
         <div id="name-error" aria-live="polite" aria-atomic="true">
           {state.errors?.name &&
             state.errors.name.map((error: string) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
@@ -38,7 +38,7 @@ export default function RegistrationForm() {
         <div id="email-error" aria-live="polite" aria-atomic="true">
           {state.errors?.email &&
             state.errors.email.map((error: string) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
@@ -56,7 +56,7 @@ export default function RegistrationForm() {
         <div id="password-error" aria-live="polite" aria-atomic="true">
           {state.errors?.password &&
             state.errors.password.map((error: string) => (
-              <p className="text-red" key={error}>
+              <p className="var(--c-red)" key={error}>
                 {error}
               </p>
             ))}
