@@ -32,20 +32,19 @@ export default function ReviewForm({
     message: null,
     errors: {},
     review: initialReview,
-    rating: initialRating,
   };
 
   const [state, dispatch] = useFormState(createReview, initialState);
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newRating = parseInt(event.target.value, 10);
-    setRating(newRating !== rating ? newRating : rating);
+    setRating(newRating);
     console.log(newRating, 'newRating');
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newReview = event.target.value;
-    setReview(newReview !== review ? newReview : review);
+    setReview(newReview);
     console.log(newReview, 'newReview');
   };
 
@@ -54,23 +53,29 @@ export default function ReviewForm({
       <input type="hidden" name="userEmail" value={userEmail} />
       <input type="hidden" name="cocktailId" value={cocktailId} />
       <input type="hidden" name="userName" value={userName} />
+      <input type="hidden" name="rating" value={rating} />
+      <input
+        type="hidden"
+        name="review"
+        value={review !== '' ? review : initialReview ?? ''}
+      />
       <label htmlFor="review">Review</label>
       {review && review} {initialReview && initialReview}
       <input
         id="review"
         name="review"
         // disabled={userReview ? true : false}
-        value={review}
         onChange={handleReviewChange}
       />
       <div>
+        {rating && rating} {initialRating && initialRating}
         {grades.map((grade, index) => (
           <label className="star" key={`star-${index + 1}`}>
             <input
               type="radio"
               id={`rating-${index}`}
               name="rating"
-              value={rating ? rating : index + 1}
+              value={index + 1}
               onChange={handleRatingChange}
             />
             <Star filled={index + 1 <= rating} />

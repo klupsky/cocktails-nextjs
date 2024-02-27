@@ -253,7 +253,14 @@ export async function createReview(
     validatedFields.data;
   const id = uuidv4();
 
-  console.log(review, rating, 'review, rating');
+  console.log(
+    cocktailId,
+    userEmail,
+    userName,
+    review,
+    rating,
+    'review, rating',
+  );
 
   try {
     // Check if the user has already reviewed the cocktail
@@ -265,7 +272,6 @@ export async function createReview(
     if (existingReview.rows.length > 0) {
       console.log('Review exists');
       console.log(existingReview.rows, 'existing');
-      console.log(review, 'revuew backend');
       // If the user has already rated or reviewed, update the existing record
       await sql`
         UPDATE reviews
