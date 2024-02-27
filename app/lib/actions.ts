@@ -241,7 +241,7 @@ export async function createReview(
     review: formData.get('review'),
     rating: formData.get('rating'),
   });
-
+  noStore();
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
@@ -254,21 +254,22 @@ export async function createReview(
   const id = uuidv4();
 
   console.log(review, rating, 'review, rating');
-  noStore();
 
   try {
     // Check if the user has already reviewed the cocktail
     const existingReview = await sql`
-      SELECT rating FROM reviews
+      SELECT * FROM reviews
       WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId}
     `;
 
     if (existingReview.rows.length > 0) {
-      console.log('Rating exists');
+      console.log('Review exists');
+      console.log(existingReview.rows, 'existing');
+      console.log(review, 'revuew backend');
       // If the user has already rated or reviewed, update the existing record
       await sql`
         UPDATE reviews
-        SET user_name = ${userName}, rating = ${rating}
+        SET user_name = ${userName}, review = ${review}, rating = ${rating}
         WHERE user_email = ${userEmail} AND cocktail_id = ${cocktailId};
       `;
     } else {
