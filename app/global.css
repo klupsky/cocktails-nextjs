@@ -17,10 +17,59 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --c-yellow: #e0ea79;
   --c-purple: #bbbaf9;
   --c-red: #e75c3c;
   --c-blue: #beebf6;
   --c-pink: #ffc6dc;
+}
+
+body {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+a:hover {
+  cursor: pointer;
+}
+button {
+  cursor: pointer;
+}
+li {
+  list-style-type: none;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .body-md {
+    @apply font-apfel text-base leading-relaxed tracking-wide text-black;
+  }
+
+  .marquee-messapia {
+    @apply font-messapia text-2xl uppercase leading-tight tracking-normal text-black;
+  }
+
+  .marquee-apfel {
+    @apply font-apfel text-xl uppercase leading-tight tracking-wide text-white;
+  }
+  .headline-md {
+    @apply font-messapia text-lg uppercase leading-tight tracking-tight text-black md:text-lg;
+  }
 }

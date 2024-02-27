@@ -3,6 +3,7 @@ import '@/app/fonts.css';
 import { auth, signOut } from '@/auth';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Footer from './components/Footer/component';
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +22,7 @@ export default async function RootLayout({
   const user = session?.user;
   return (
     <html lang="en">
-      <body>
+      <body className="body-md">
         {user ? (
           <form
             action={async () => {
@@ -38,6 +39,8 @@ export default async function RootLayout({
         )}
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );
