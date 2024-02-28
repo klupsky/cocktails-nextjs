@@ -4,6 +4,7 @@ import { auth, signOut } from '@/auth';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Footer from './components/Footer/component';
+import Menu from './components/Menu/component';
 
 export const metadata: Metadata = {
   title: {
@@ -20,23 +21,16 @@ export default async function RootLayout({
 }) {
   const session = await auth();
   const user = session?.user;
+
+
+  const handleSignOut = async () => {
+    'use server';
+    await signOut();
+  };
   return (
     <html lang="en">
       <body className="body-md">
-        {user ? (
-          <form
-            action={async () => {
-              'use server';
-              await signOut();
-            }}
-          >
-            <button>
-              <div>Sign Out</div>
-            </button>
-          </form>
-        ) : (
-          <Link href="/login">Sign In</Link>
-        )}
+        <Menu user={user} handleSignOut={handleSignOut} />
 
         {children}
 
