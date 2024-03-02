@@ -69,7 +69,12 @@ li {
   .marquee-apfel {
     @apply font-apfel text-xl uppercase leading-tight tracking-wide text-white;
   }
+
   .headline-md {
-    @apply font-messapia text-lg uppercase leading-tight tracking-tight text-black md:text-lg;
+    @apply font-messapia text-lg uppercase leading-4 tracking-tight text-black;
+  }
+
+  .headline-lg {
+    @apply font-messapia text-3xl uppercase leading-8 tracking-tight text-black md:text-5xl;
   }
 }
