@@ -12,35 +12,54 @@ type TMenuProps = {
 const Menu = ({ user, handleSignOut }: TMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleToggleMenu = () => {
+  const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   return (
-    <div>
-      <button onClick={handleToggleMenu}>
-        {menuOpen ? 'Close Menu' : 'Open Menu'}
+    <div className="width-full relative">
+      <button
+        onClick={toggleMenu}
+        className="absolute right-12 top-12 z-10 flex flex-col items-center justify-center"
+      >
+        <span
+          className={`block h-0.5 w-6 rounded-sm bg-black transition-all duration-300 ease-out ${
+            menuOpen ? 'translate-y-1 rotate-45' : '-translate-y-0.5'
+          }`}
+        ></span>
+        <span
+          className={`my-0.5 block h-0.5 w-6 rounded-sm bg-black transition-all duration-300 ease-out ${
+            menuOpen ? 'opacity-0' : 'opacity-100'
+          }`}
+        ></span>
+        <span
+          className={`block h-0.5 w-6 rounded-sm bg-black transition-all duration-300 ease-out ${
+            menuOpen ? '-translate-y-1 -rotate-45' : 'translate-y-0.5'
+          }`}
+        ></span>
       </button>
 
-      {menuOpen && (
-        <div className="menu-container">
-          {user ? (
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                await handleSignOut();
-                setMenuOpen(false); // Close the menu after signing out
-              }}
-            >
-              <button type="submit">
-                <div>Sign Out</div>
-              </button>
-            </form>
-          ) : (
-            <Link href="/login">Sign In</Link>
-          )}
-        </div>
-      )}
+      <div
+        className={`z-2 fixed top-0 h-[100vh] w-full bg-red transition-all duration-300 ease-out ${
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {user ? (
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await handleSignOut();
+              setMenuOpen(false);
+            }}
+          >
+            <button type="submit">
+              <div>Sign Out</div>
+            </button>
+          </form>
+        ) : (
+          <Link href="/login">Sign In</Link>
+        )}
+      </div>
     </div>
   );
 };
