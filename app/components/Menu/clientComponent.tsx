@@ -5,17 +5,16 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 type TMenuProps = {
-  user: TUserFromParams | undefined;
+  user?: TUserFromParams | null | undefined;
   handleSignOut: () => Promise<void>;
-}
+};
 
-const Menu  = ({ user, handleSignOut }: TMenuProps) => {
+const Menu = ({ user, handleSignOut }: TMenuProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
 
   return (
     <div>

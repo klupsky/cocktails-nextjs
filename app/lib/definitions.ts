@@ -1,13 +1,13 @@
 export type TUser = {
   id: string;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   password: string;
 };
 
 export type TUserFromParams = {
-  name: string | undefined;
-  email: string | undefined;
+  name?: string | null | undefined;
+  email?: string | null | undefined;
 };
 
 export type TCocktail = {

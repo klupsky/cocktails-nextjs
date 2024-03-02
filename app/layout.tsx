@@ -4,7 +4,7 @@ import { auth, signOut } from '@/auth';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Footer from './components/Footer/component';
-import Menu from './components/Menu/component';
+import Menu from './components/Menu/clientComponent';
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +21,6 @@ export default async function RootLayout({
 }) {
   const session = await auth();
   const user = session?.user;
-
 
   const handleSignOut = async () => {
     'use server';
