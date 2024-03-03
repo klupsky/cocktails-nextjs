@@ -77,4 +77,8 @@ li {
   .headline-lg {
     @apply font-messapia text-3xl uppercase leading-8 tracking-tight text-black md:text-5xl;
   }
+
+  .headline-xl {
+    @apply font-messapia text-3xl uppercase leading-8 tracking-tight text-black md:text-7xl;
+  }
 }

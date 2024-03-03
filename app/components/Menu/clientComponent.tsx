@@ -20,7 +20,7 @@ const Menu = ({ user, handleSignOut }: TMenuProps) => {
     <div className="width-full relative">
       <button
         onClick={toggleMenu}
-        className="absolute right-12 top-12 z-20 flex flex-col items-center justify-center"
+        className="absolute right-5 top-5 z-20 flex flex-col items-center justify-center md:right-8 md:top-8"
       >
         <span
           className={`block h-0.5 w-6 rounded-sm bg-black transition-all duration-300 ease-out ${
@@ -40,12 +40,12 @@ const Menu = ({ user, handleSignOut }: TMenuProps) => {
       </button>
 
       <div
-        className={`fixed top-0 z-10 flex h-[100vh] w-full flex-col items-center justify-between bg-red p-12 transition-all duration-300 ease-out ${
+        className={`fixed top-0 z-10 flex h-[100vh] w-full flex-col items-center justify-between bg-red p-5 transition-all duration-300 ease-out md:p-8 ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         onClick={toggleMenu}
       >
-        <div className="max-w-[120px] text-center">
+        <div className="max-w-[140px] text-center">
           <Link href="/">
             <h3 className="headline-md">Fancy a cocktail?</h3>
           </Link>
