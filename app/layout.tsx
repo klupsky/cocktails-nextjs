@@ -8,7 +8,7 @@ import Menu from './components/Menu/clientComponent';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Cocktails',
+    template: 'Cocktails',
     default: 'Find your favourite Cocktail',
   },
   description: 'An app created and developed by Katharina Chalupsky.',

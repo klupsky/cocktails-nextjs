@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Wave from 'react-wavify';
 
 export default function Hero() {
@@ -8,7 +9,7 @@ export default function Hero() {
         <br />
         fancy a cocktail?
       </h1>
-      <div className="absolute bottom-0 left-0 w-full">
+      <div className="absolute bottom-0 left-0 flex w-full">
         <Wave
           fill="var(--c-purple)"
           paused={false}
@@ -20,6 +21,14 @@ export default function Hero() {
           }}
         />
       </div>
+
+      <Image
+        className="rotate-15 transform-origin-top-center animate-swing absolute bottom-[40px] left-[15vw] transform md:bottom-[80px]"
+        src="/../images/components/cherry.svg"
+        alt="{preview.name}"
+        width={160}
+        height={160}
+      />
     </section>
   );
 }

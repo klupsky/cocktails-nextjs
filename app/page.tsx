@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <main>
       <Hero />
-      {/* <About /> */}
+      <About />
       <CollectionPreview />
     </main>
   );

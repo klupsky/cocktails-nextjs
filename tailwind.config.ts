@@ -43,6 +43,17 @@ const config: Config = {
         30: '30px',
         50: '50px',
       },
+      animation: {
+        swing: 'swing 15s both infinite',
+      },
+      keyframes: {
+        swing: {
+          '20%': { transform: 'rotate3d(0, 0, 1, 10deg)' },
+          '40%': { transform: 'rotate3d(0, 0, 1, -10deg)' },
+          '60%': { transform: 'rotate3d(0, 0, 1, 7deg)' },
+          '80%': { transform: 'rotate3d(0, 0, 1, -10deg)' },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],
